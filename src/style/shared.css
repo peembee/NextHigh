@@ -1,0 +1,21 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.inputError {
+  color: rgba(235, 10, 10, 0.926);
+}
+
+.appContainer {
+  flex: 1;
+  padding-top: 6rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-bottom: 4rem;
+}
+
+.footer {
+  height: 80px;
+  margin-top: auto;
+}

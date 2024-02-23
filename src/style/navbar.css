@@ -1,0 +1,154 @@
+.navContainer {
+  display: flex;
+  background: linear-gradient(
+    109.6deg,
+    rgb(0, 0, 0) 11.2%,
+    rgb(11, 132, 145) 91.1%
+  );
+  box-shadow: 10px 1px 50px 10px rgba(0, 0, 0, 0.612);
+}
+
+.navbarBrand {
+  font-weight: bold;
+  font-size: large;
+  text-decoration: none;
+  padding: 20px;
+  margin-left: 5%;
+  margin-right: 2%;
+  color: whitesmoke;
+  transition: 0.2s;
+}
+.navbarBrand:hover {
+  color: rgb(176, 151, 151);
+  transition: 0.2s;
+}
+
+.linkBtn {
+  font-weight: bold;
+  text-decoration: none;
+  margin: 20px;
+  color: whitesmoke;
+  transition: 0.2s;
+}
+.linkBtn:hover {
+  color: rgb(176, 151, 151);
+  transition: 0.2s;
+}
+
+.activeLink {
+  font-weight: bold;
+  text-decoration: none;
+  margin: 20px;
+  color: rgb(176, 151, 151);
+}
+.signedInContainer {
+  display: flex;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 20px;
+  color: whitesmoke;
+  transition: 0.2s;
+  background-color: rgba(255, 255, 255, 0); /* Helt genomskinlig bakgrund */
+  border: none;
+}
+.loggedInContainer {
+  font-weight: bold;
+  text-decoration: none;
+  margin: 20px;
+  color: whitesmoke;
+  transition: 0.2s;
+  background-color: rgba(255, 255, 255, 0); /* Helt genomskinlig bakgrund */
+  border: none;
+}
+.signBtnPosition {
+  width: 200px;
+}
+.signInBtn {
+  font-weight: bold;
+  text-decoration: none;
+  margin: 20px;
+  color: whitesmoke;
+  transition: 0.2s;
+  background-color: rgba(255, 255, 255, 0); /* Helt genomskinlig bakgrund */
+  border: none;
+}
+.signInBtnHide {
+  font-weight: bold;
+  text-decoration: none;
+  margin: 20px;
+  color: rgba(245, 245, 245, 0);
+  transition: 0.2s;
+  background-color: rgba(255, 255, 255, 0); /* Helt genomskinlig bakgrund */
+  border: none;
+}
+.signInBtn:hover {
+  color: rgb(176, 151, 151);
+  transition: 0.2s;
+}
+.navSearchContainer {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  margin-top: 11px;
+  margin-left: auto;
+  margin-right: 8%;
+  width: 500px;
+}
+
+.navSearchBtn {
+  background: rgba(245, 245, 245, 0.7);
+  border-radius: 10px;
+  transition: 0.3s;
+  margin-left: 10px;
+  font-weight: bold;
+  width: 80px;
+}
+.navSearchBtn:hover {
+  background-color: rgb(70, 120, 113);
+  transition: 0.3s;
+}
+
+.pingisBall {
+  width: 20px;
+  height: 20px;
+  background-color: whitesmoke; /* Ange önskad färg */
+  border-radius: 50%;
+  margin: 0 10px; /* Justera om det behövs */
+  position: relative;
+  animation: bounceRight 2s linear infinite;
+}
+
+@keyframes bounceRight {
+  0%,
+  100% {
+    transform: translateY(2vh) translateX(2vw); /* Bollen är i startposition */
+  }
+
+  10% {
+    transform: translateY(4vh) translateX(4vw); /* Åk ner 20% av viewport-höjden och åt höger 10% av viewport-bredd */
+  }
+  20% {
+    transform: translateY(2vh) translateX(6vw); /* Åk upp igen och åt höger 20% av viewport-bredd */
+  }
+  30% {
+    transform: translateY(4vh) translateX(8vw); /* Åk ner igen och åt höger 30% av viewport-bredd */
+  }
+  40% {
+    transform: translateY(2vh) translateX(10vw); /* Åk upp igen och åt höger 40% av viewport-bredd */
+  }
+  50% {
+    transform: translateY(4vh) translateX(12vw); /* Åk ner igen och åt höger 50% av viewport-bredd */
+  }
+  60% {
+    transform: translateY(2vh) translateX(14vw); /* Åk upp igen och åt höger 60% av viewport-bredd */
+  }
+  70% {
+    transform: translateY(4vh) translateX(16vw); /* Åk ner igen och åt höger 70% av viewport-bredd */
+  }
+  80% {
+    transform: translateY(2vh) translateX(18vw); /* Åk upp igen och åt höger 80% av viewport-bredd */
+  }
+  90% {
+    transform: translateY(4vh) translateX(20vw); /* Åk ner igen och åt höger 90% av viewport-bredd */
+  }
+}
