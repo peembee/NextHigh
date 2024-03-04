@@ -1,13 +1,13 @@
 import * as yup from 'yup';
-import Link from '@mui/material/Link';
 import { yupResolver } from '@hookform/resolvers/yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useForm } from 'react-hook-form';
-import { useState } from 'react';
-import { SignUp } from '../../signUp/pages/signUp';
 import '../../style/signIn.css';
 import '../../style/shared.css';
 import { Box } from '@mui/material';
+import { useFetchUser } from '../queries/useQueries/useLogin';
+import { toast } from 'react-toastify';
+import { LoginRequest } from '../../services/API/request/loginRequest';
 
 type SignInProps = {
   setSignInModalOpen: (close: boolean) => void;
@@ -16,7 +16,8 @@ type SignInProps = {
 
 export default function SignIn(props: SignInProps) {
   const { setSignInModalOpen, setSignUpModalOpen } = props;
-  const [signUpModal, setSignUpModal] = useState(false);
+
+  const userSignIn = useFetchUser();
 
   const schema = yup.object().shape({
     username: yup.string().trim().required('Username is required'),
@@ -31,8 +32,15 @@ export default function SignIn(props: SignInProps) {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = (data) => {
+  const onSubmit = (data: LoginRequest) => {
     console.log('data from onSUbmit från signIn', data);
+
+    userSignIn.mutate(data, {
+      onSuccess: (data) => {
+        console.log('Succed från signIn', data.apiResponseWithID);
+        toast.success('Welcome!');
+      },
+    });
   };
 
   return (
@@ -103,11 +111,11 @@ export default function SignIn(props: SignInProps) {
                           </p>
                         </div>
 
-                        <p className='small mb-5 pb-lg-2'>
+                        {/* <p className='small mb-5 pb-lg-2'>
                           <a className='text-white-50' href='#!'>
                             Forgot password?
                           </a>
-                        </p>
+                        </p> */}
 
                         <button
                           className='btn btn-outline-light btn-lg px-5'

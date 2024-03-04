@@ -43,6 +43,7 @@ export function SignUp(props: SignUpProps) {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm({
     resolver: yupResolver(schema),
   });
@@ -51,20 +52,25 @@ export function SignUp(props: SignUpProps) {
     setIsLoading(true);
     console.log('data from onSubmit register', data);
 
-    createNewUser.mutate(data, {
-      onSuccess: (data) => {
-        console.log('userdata from signUpForm:', data);
-        toast.success('You have successfully registered!');
-        // Hantera lyckad postning här
-      },
-      onError: (error) => {
-        console.error('error postUSER:', error);
-        toast.error('An error occurred. Please try again later.');
-      },
-      onSettled: () => {
-        setIsLoading(false);
-      },
-    });
+    setTimeout(() => {
+      createNewUser.mutate(data, {
+        onSuccess: (data) => {
+          console.log('userdata from signUpForm:', data);
+          toast.success('You have successfully registered!');
+          reset();
+          setSignUpModalOpen(false);
+          setSignInModalOpen(true);
+          // Hantera lyckad postning här
+        },
+        onError: (error) => {
+          console.error('error postUSER:', error);
+          toast.error('An error occurred. Please try again later.');
+        },
+        onSettled: () => {
+          setIsLoading(false);
+        },
+      });
+    }, 2000);
   };
 
   return (
@@ -231,12 +237,6 @@ export function SignUp(props: SignUpProps) {
                               </p>
                             </div>
                           </Box>
-
-                          <p className='small mb-5 pb-lg-2'>
-                            <a className='text-white-50' href='#!'>
-                              Forgot password?
-                            </a>
-                          </p>
 
                           <button
                             disabled={isLoading}

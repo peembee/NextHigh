@@ -18,8 +18,6 @@ const createUser = async (newUser: EmployeeRequest) => {
 };
 export const UseCreateUser = () => {
   const queryClient = useQueryClient();
-  FileSystemDirectoryHandle;
-
   return useMutation({
     mutationFn: createUser,
     onSuccess: () => {

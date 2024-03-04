@@ -1,24 +1,25 @@
-// import axios from 'axios';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import { LoginRequest } from '../../../services/API/request/loginRequest';
 
-// // eslint-disable-next-line no-unused-vars
-// const getUserApi = 'https://localhost:7062/api/Person';
+const getUserApi = 'https://localhost:7062/api/Login';
 
-// // eslint-disable-next-line @typescript-eslint/no-explicit-any
-// const getUser: any = async () => {
-//   try {
-//     const res = await axios.get(getUserApi, getUser);
-//     return res.data;
-//   } catch (error) {
-//     console.log('error i createUSER:', error);
-//     throw error;
-//   }
-// };
+const getUser = async (user: LoginRequest) => {
+  try {
+    const res = await axios.post(getUserApi, {
+      username: user.username,
+      password: user.password,
+    });
+    console.log('res från login', res);
+    return res.data;
+  } catch (error) {
+    console.log('error i createUSER:', error);
+    throw error;
+  }
+};
 
-// export const useFetchUser = () => {
-//   return useQuery({
-//     queryKey: ['users'],
-//     queryFn: () => getUser(),
-//   });
-// };
-
-// ALLT FEL TROLIGTVIST
+export const useFetchUser = () => {
+  return useMutation({
+    mutationFn: getUser,
+  });
+};
