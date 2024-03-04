@@ -4,6 +4,6 @@ import { Box } from '@mui/material';
 
 export const Home = () => {
   const { user } = useContext(AppContext);
-
-  return <Box>home</Box>;
+  // test first azure commit
+  return <Box>test</Box>;
 };
