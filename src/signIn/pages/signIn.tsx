@@ -4,10 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useForm } from 'react-hook-form';
 import '../../style/signIn.css';
 import '../../style/shared.css';
-import { Box } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 import { useFetchUser } from '../queries/useQueries/useLogin';
 import { toast } from 'react-toastify';
 import { LoginRequest } from '../../services/API/request/loginRequest';
+import { useContext, useState } from 'react';
+import { AppContext } from '../../contexts/appContext';
 
 type SignInProps = {
   setSignInModalOpen: (close: boolean) => void;
@@ -16,6 +18,9 @@ type SignInProps = {
 
 export default function SignIn(props: SignInProps) {
   const { setSignInModalOpen, setSignUpModalOpen } = props;
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const { setUser } = useContext(AppContext);
 
   const userSignIn = useFetchUser();
 
@@ -33,14 +38,22 @@ export default function SignIn(props: SignInProps) {
   });
 
   const onSubmit = (data: LoginRequest) => {
-    console.log('data from onSUbmit från signIn', data);
-
-    userSignIn.mutate(data, {
-      onSuccess: (data) => {
-        console.log('Succed från signIn', data.apiResponseWithID);
-        toast.success('Welcome!');
-      },
-    });
+    setIsLoading(true);
+    setTimeout(() => {
+      userSignIn.mutate(data, {
+        onSuccess: (data) => {
+          toast.success('Welcome!');
+          setUser(data.result);
+          setSignInModalOpen(false);
+        },
+        onError: (error: any) => {
+          setErrorMessage(error.response.data);
+        },
+        onSettled: () => {
+          setIsLoading(false);
+        },
+      });
+    }, 1500);
   };
 
   return (
@@ -120,9 +133,13 @@ export default function SignIn(props: SignInProps) {
                         <button
                           className='btn btn-outline-light btn-lg px-5'
                           type='submit'
+                          disabled={isLoading}
                         >
-                          Login
+                          {isLoading ? <CircularProgress size={24} /> : 'Login'}
                         </button>
+                        {errorMessage !== null && (
+                          <p className='inputError'>{errorMessage}</p>
+                        )}
                       </form>
                     </div>
 

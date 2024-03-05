@@ -19,15 +19,15 @@ import { useNavigate } from 'react-router-dom';
 import { Profile } from '../profile/pages/profile';
 import { AppContext } from '../contexts/appContext';
 
-const pages = [
+export const pages = [
   { id: 1, pageName: 'Home', url: '/home', toolTip: 'Lets go Home' },
   { id: 2, pageName: 'PingPong', url: '/pingpong', toolTip: 'Go to Ping Pong' },
   { id: 3, pageName: 'Staff', url: '/staff', toolTip: 'Meet our Staff' },
 ];
 const settings = [
-  { id: 1, settingName: 'profile' },
-  { id: 2, settingName: 'account' },
-  { id: 3, settingName: 'logout' },
+  { id: 1, settingName: 'Profile' },
+  { id: 2, settingName: 'Account' },
+  { id: 3, settingName: 'Logout' },
 ];
 
 type NavbarProps = {
@@ -47,7 +47,7 @@ export function Navbar(props: NavbarProps) {
 
   //user context
   const { user } = useContext(AppContext);
-  console.log('user', user);
+  console.log('LoggedInUser:', user);
 
   // Navbar-actions
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -72,13 +72,13 @@ export function Navbar(props: NavbarProps) {
 
   const handleOpenModal = (target: string) => {
     switch (target) {
-      case 'profile':
+      case settings[0].settingName:
         setOpenProfileModal(true);
         break;
-      case 'account':
+      case settings[1].settingName:
         setOpenAccountModal(true);
         break;
-      case 'logout':
+      case settings[2].settingName:
         setOpenLogoutModal(true);
         break;
       case 'login':
@@ -253,6 +253,7 @@ export function Navbar(props: NavbarProps) {
                 onClick={() => handleOpenModal('login')}
                 variant='contained'
                 sx={{
+                  width: '100px',
                   background: `linear-gradient(
                               109.6deg,
                               rgb(11, 132, 145) 2.1%,

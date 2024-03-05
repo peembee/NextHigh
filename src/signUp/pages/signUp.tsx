@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../style/signUp.css';
 import { UseCreateUser } from '../queries/useMutations/useCreateUser';
@@ -50,20 +50,15 @@ export function SignUp(props: SignUpProps) {
 
   const onSubmit = (data: EmployeeRequest) => {
     setIsLoading(true);
-    console.log('data from onSubmit register', data);
-
     setTimeout(() => {
       createNewUser.mutate(data, {
         onSuccess: (data) => {
-          console.log('userdata from signUpForm:', data);
-          toast.success('You have successfully registered!');
+          toast.success('You are successfully registered!');
           reset();
           setSignUpModalOpen(false);
           setSignInModalOpen(true);
-          // Hantera lyckad postning här
         },
         onError: (error) => {
-          console.error('error postUSER:', error);
           toast.error('An error occurred. Please try again later.');
         },
         onSettled: () => {
@@ -75,7 +70,6 @@ export function SignUp(props: SignUpProps) {
 
   return (
     <>
-      <ToastContainer />
       <Box sx={{ marginTop: '6rem' }}>
         <div>
           <section className='%-100 gradient-custom'>

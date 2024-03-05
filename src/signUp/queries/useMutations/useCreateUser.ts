@@ -7,14 +7,8 @@ import { EmployeeKeys } from '../../../staff/queries/employeeKeys';
 const createUserApi = 'https://localhost:7062/api/Person';
 
 const createUser = async (newUser: EmployeeRequest) => {
-  console.log('newUSer from query::', newUser);
-  try {
-    const res = await axios.post(createUserApi, newUser);
-    return res.data;
-  } catch (error) {
-    console.log('error i createUSER:', error);
-    throw error;
-  }
+  const res = await axios.post(createUserApi, newUser);
+  return res.data;
 };
 export const UseCreateUser = () => {
   const queryClient = useQueryClient();
