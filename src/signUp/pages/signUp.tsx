@@ -1,5 +1,4 @@
 import { useForm } from 'react-hook-form';
-import * as yup from 'yup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import '../../style/signUp.css';
@@ -8,6 +7,7 @@ import { EmployeeRequest } from '../../services/API/request/employeeRequest';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, CircularProgress } from '@mui/material';
 import { useState } from 'react';
+import { SignUpSchema } from '../../schemas/signUpSchema';
 
 type SignUpProps = {
   setSignUpModalOpen: (close: boolean) => void;
@@ -19,33 +19,13 @@ export function SignUp(props: SignUpProps) {
   const [isLoading, setIsLoading] = useState(false);
   const createNewUser = UseCreateUser();
 
-  const schema = yup.object().shape({
-    username: yup.string().trim().required('Username is required'),
-    email: yup.string().trim().email().required('Email is required'),
-    firstName: yup.string().trim().required('Firstname is required'),
-    lastName: yup.string().trim().required('Lastname is required'),
-    yearsInPratice: yup
-      .number()
-      .positive()
-      .integer()
-      .min(0)
-      .max(80)
-      .required('Hiredtime is required'),
-    password: yup.string().min(4).max(20).required('Password is required'),
-    confirmPassword: yup
-      .string()
-      .notOneOf([null], "Password Don't Match")
-      .oneOf([yup.ref('password')], "Password Don't Match")
-      .required('Confirm Password is required'),
-  });
-
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(SignUpSchema),
   });
 
   const onSubmit = (data: EmployeeRequest) => {
@@ -187,7 +167,7 @@ export function SignUp(props: SignUpProps) {
                             <input
                               type='number' // Använd "text" om fältet är för användarnamn
                               id='typeHiredtime' // Uppdatera id om det är mer relevant för användarnamnet
-                              placeholder='Hiredtime'
+                              placeholder='Employed for many years'
                               autoComplete='off'
                               className='form-control form-control-lg'
                               {...register('yearsInPratice')}

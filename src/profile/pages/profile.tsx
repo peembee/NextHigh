@@ -7,6 +7,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { EmployeeResponse } from '../../services/API/response/employeeResponse';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -20,10 +21,11 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 type ProfileProps = {
   setModalOpen: (close: boolean) => void;
   modalOpen: boolean;
+  user: EmployeeResponse;
 };
 
 export const Profile = (props: ProfileProps) => {
-  const { setModalOpen, modalOpen } = props;
+  const { setModalOpen, modalOpen, user } = props;
 
   return (
     <>

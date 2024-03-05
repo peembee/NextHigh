@@ -43,10 +43,7 @@ export const LogOut = (props: LogOutProps) => {
         aria-labelledby='customized-dialog-title'
         open={modalOpen}
       >
-        <DialogTitle
-          sx={{ m: 0, p: 2, justifyContent: 'center' }}
-          id='customized-dialog-title'
-        >
+        <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
           <LogoutIcon sx={{ mr: 2 }} />
           Log out
         </DialogTitle>

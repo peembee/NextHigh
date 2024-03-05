@@ -1,4 +1,3 @@
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useForm } from 'react-hook-form';
@@ -10,6 +9,7 @@ import { toast } from 'react-toastify';
 import { LoginRequest } from '../../services/API/request/loginRequest';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../contexts/appContext';
+import { SignInSchema } from '../../schemas/signInSchema';
 
 type SignInProps = {
   setSignInModalOpen: (close: boolean) => void;
@@ -24,17 +24,12 @@ export default function SignIn(props: SignInProps) {
 
   const userSignIn = useFetchUser();
 
-  const schema = yup.object().shape({
-    username: yup.string().trim().required('Username is required'),
-    password: yup.string().required('Password is required'),
-  });
-
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(SignInSchema),
   });
 
   const onSubmit = (data: LoginRequest) => {

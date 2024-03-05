@@ -5,12 +5,9 @@ import { EmployeeKeys } from '../employeeKeys';
 const getUserApi = 'https://localhost:7062/api/person';
 
 const getUserById = async (userID: number) => {
-  try {
-    const res = await axios.get(`${getUserApi}/${userID}`);
-    return res.data;
-  } catch (error) {
-    throw new Error('An error occurred while fetching user by ID');
-  }
+  const res = await axios.get(`${getUserApi}/${userID}`);
+  console.log('getUserById', res);
+  return res.data;
 };
 
 export const useFetchUserById = (id: number) => {

@@ -313,16 +313,18 @@ export function Navbar(props: NavbarProps) {
           </Toolbar>
         </Container>
       </AppBar>
-      {openProfileModal && (
+      {openProfileModal && user && (
         <Profile
           setModalOpen={setOpenProfileModal}
           modalOpen={openProfileModal}
+          user={user}
         />
       )}
-      {openAccountModal && (
+      {openAccountModal && user && (
         <Account
           setModalOpen={setOpenAccountModal}
           modalOpen={openAccountModal}
+          user={user}
         />
       )}
       {openLogoutModal && (

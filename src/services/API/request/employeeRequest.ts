@@ -1,8 +1,11 @@
 export interface EmployeeRequest {
+  personID?: number;
   username: string;
-  password: string;
+  email: string;
   firstName: string;
   lastName: string;
   yearsInPratice: number;
-  email: string;
+  imageURL?: string;
+  confirmPassword?: string;
+  password?: string;
 }
