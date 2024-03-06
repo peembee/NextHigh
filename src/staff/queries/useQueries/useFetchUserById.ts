@@ -6,7 +6,6 @@ const getUserApi = 'https://localhost:7062/api/person';
 
 const getUserById = async (userID: number) => {
   const res = await axios.get(`${getUserApi}/${userID}`);
-  console.log('getUserById', res);
   return res.data;
 };
 

@@ -6,6 +6,5 @@ export interface EmployeeRequest {
   lastName: string;
   yearsInPratice: number;
   imageURL?: string;
-  confirmPassword?: string;
   password?: string;
 }

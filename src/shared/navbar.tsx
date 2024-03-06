@@ -324,7 +324,6 @@ export function Navbar(props: NavbarProps) {
         <Account
           setModalOpen={setOpenAccountModal}
           modalOpen={openAccountModal}
-          user={user}
         />
       )}
       {openLogoutModal && (

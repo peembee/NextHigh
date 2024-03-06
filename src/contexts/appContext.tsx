@@ -1,14 +1,17 @@
 import { ReactNode, createContext, useState, useEffect } from 'react';
 import { EmployeeResponse } from '../services/API/response/employeeResponse';
+import axios from 'axios';
 
 interface ContextProps {
   user: EmployeeResponse | null;
   setUser: (user: EmployeeResponse | null) => void;
+  fetchUpdatedUser: (userId: number) => Promise<void>;
 }
 
 export const AppContext = createContext<ContextProps>({
   user: null,
   setUser: () => {},
+  fetchUpdatedUser: async () => {},
 });
 
 export const Userprovider = ({ children }: { children: ReactNode }) => {
@@ -31,9 +34,20 @@ export const Userprovider = ({ children }: { children: ReactNode }) => {
     setUserState(newUser);
   };
 
+  const fetchUpdatedUser = async (userId: number) => {
+    const getUserApi = 'https://localhost:7062/api/person';
+    try {
+      const res = await axios.get(`${getUserApi}/${userId}`);
+      setUser(res.data);
+    } catch (error) {
+      console.error('Error fetching updated user:', error);
+    }
+  };
+
   const contextValue: ContextProps = {
     user,
     setUser,
+    fetchUpdatedUser,
   };
 
   return (

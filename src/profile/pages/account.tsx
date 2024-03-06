@@ -6,7 +6,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { EmployeeResponse } from '../../services/API/response/employeeResponse';
 import {
   CircularProgress,
   Grid,
@@ -24,7 +23,6 @@ import '../../style/account.css';
 import { EmployeeRequest } from '../../services/API/request/employeeRequest';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../contexts/appContext';
-import { DialogUpdateAccount } from '../components/dialogUpdateAccount';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -38,26 +36,25 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 type AccountProps = {
   setModalOpen: (close: boolean) => void;
   modalOpen: boolean;
-  user: EmployeeResponse;
 };
 
 export const Account = (props: AccountProps) => {
-  const { setModalOpen, modalOpen, user } = props;
+  const { setModalOpen, modalOpen } = props;
   const [isLoading, setIsLoading] = useState(false);
-  const [isUpdateUserOpen, setUpdateUserOpen] = useState(false);
+  const { user, fetchUpdatedUser } = useContext(AppContext);
 
   const updateUser = useUpdateUser();
 
   const formMethods = useForm<any>({
     resolver: yupResolver(AccountSchema),
     defaultValues: {
-      personID: user.personID,
-      username: user.username,
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      yearsInPratice: user.yearsInPratice,
-      imageURL: user.imageURL,
+      personID: user?.personID || 0,
+      username: user?.username || '',
+      email: user?.email || '',
+      firstName: user?.firstName || '',
+      lastName: user?.lastName || '',
+      yearsInPratice: user?.yearsInPratice || 0,
+      imageURL: user?.imageURL || '',
     },
   });
 
@@ -67,29 +64,16 @@ export const Account = (props: AccountProps) => {
     formState: { errors, isDirty },
   } = formMethods;
 
-  console.log('uuuuser', user);
-  console.log('isUpdateUserOpen', isUpdateUserOpen);
-
   const onSubmit = (data: EmployeeRequest) => {
     setIsLoading(true);
-
-    const postData: EmployeeRequest = {
-      personID: user.personID,
-      username: data.username,
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      yearsInPratice: data.yearsInPratice,
-      imageURL: data.imageURL,
-      password: user.password,
-    };
-    console.log('postData', postData);
     setTimeout(() => {
-      updateUser.mutate(postData, {
+      updateUser.mutate(data, {
         onSuccess: () => {
-          setUpdateUserOpen(true);
-          user;
-          // toast.success('Account updated');
+          // When update is successful, fetch updated user data
+          if (data.personID) {
+            fetchUpdatedUser(data.personID);
+          }
+          toast.success('Account updated');
         },
         onError: (error) => {
           toast.error('An error occurred. Please try again later.');
@@ -127,140 +111,142 @@ export const Account = (props: AccountProps) => {
             <CloseIcon />
           </IconButton>
           <DialogContent dividers>
-            <Grid container spacing={3} p={2} pl={5} pr={5}>
-              <Grid item xs={12} md={6}>
-                <Controller
-                  name='username'
-                  control={control}
-                  defaultValue={user.username}
-                  render={({ field }) => (
-                    <>
-                      <TextField
-                        {...field}
-                        disabled
-                        size='small'
-                        label='Username'
-                        fullWidth
-                        InputProps={{
-                          endAdornment: (
-                            <InputAdornment position='end'>
-                              <LockIcon />
-                            </InputAdornment>
-                          ),
-                        }}
-                      />
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Controller
-                  name='email'
-                  control={control}
-                  defaultValue={user.email}
-                  render={({ field }) => (
-                    <>
-                      <TextField
-                        {...field}
-                        size='small'
-                        label='Email'
-                        fullWidth
-                      />
-                      {errors?.email?.message && (
-                        <Typography className='inputError'>
-                          {String(errors.email.message)}
-                        </Typography>
-                      )}
-                    </>
-                  )}
-                />
-              </Grid>
+            {user && (
+              <Grid container spacing={3} p={2} pl={5} pr={5}>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name='username'
+                    control={control}
+                    defaultValue={user.username}
+                    render={({ field }) => (
+                      <>
+                        <TextField
+                          {...field}
+                          disabled
+                          size='small'
+                          label='Username'
+                          fullWidth
+                          InputProps={{
+                            endAdornment: (
+                              <InputAdornment position='end'>
+                                <LockIcon />
+                              </InputAdornment>
+                            ),
+                          }}
+                        />
+                      </>
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name='email'
+                    control={control}
+                    defaultValue={user.email}
+                    render={({ field }) => (
+                      <>
+                        <TextField
+                          {...field}
+                          size='small'
+                          label='Email'
+                          fullWidth
+                        />
+                        {errors?.email?.message && (
+                          <Typography className='inputError'>
+                            {String(errors.email.message)}
+                          </Typography>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
 
-              <Grid item xs={12} md={6}>
-                <Controller
-                  name='firstName'
-                  control={control}
-                  defaultValue={user.firstName}
-                  render={({ field }) => (
-                    <>
-                      <TextField
-                        {...field}
-                        size='small'
-                        label='Firstname'
-                        fullWidth
-                      />
-                      {errors?.firstName?.message && (
-                        <Typography className='inputError'>
-                          {String(errors.firstName.message)}
-                        </Typography>
-                      )}
-                    </>
-                  )}
-                />
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name='firstName'
+                    control={control}
+                    defaultValue={user.firstName}
+                    render={({ field }) => (
+                      <>
+                        <TextField
+                          {...field}
+                          size='small'
+                          label='Firstname'
+                          fullWidth
+                        />
+                        {errors?.firstName?.message && (
+                          <Typography className='inputError'>
+                            {String(errors.firstName.message)}
+                          </Typography>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name='lastName'
+                    control={control}
+                    defaultValue={user.lastName}
+                    render={({ field }) => (
+                      <>
+                        <TextField
+                          {...field}
+                          size='small'
+                          label='Lastname'
+                          fullWidth
+                        />
+                        {errors?.lastName?.message && (
+                          <Typography className='inputError'>
+                            {String(errors.lastName.message)}
+                          </Typography>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name='yearsInPratice'
+                    control={control}
+                    defaultValue={user.yearsInPratice}
+                    render={({ field }) => (
+                      <>
+                        <TextField
+                          {...field}
+                          size='small'
+                          type='number'
+                          label='Employed for many years'
+                          fullWidth
+                        />
+                        {errors?.yearsInPratice?.message && (
+                          <Typography className='inputError'>
+                            {String(errors.yearsInPratice.message)}
+                          </Typography>
+                        )}
+                      </>
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Controller
+                    name='imageURL'
+                    control={control}
+                    defaultValue={user.imageURL}
+                    render={({ field }) => (
+                      <>
+                        <TextField
+                          {...field}
+                          size='small'
+                          label='Image'
+                          fullWidth
+                        />
+                      </>
+                    )}
+                  />
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={6}>
-                <Controller
-                  name='lastName'
-                  control={control}
-                  defaultValue={user.lastName}
-                  render={({ field }) => (
-                    <>
-                      <TextField
-                        {...field}
-                        size='small'
-                        label='Lastname'
-                        fullWidth
-                      />
-                      {errors?.lastName?.message && (
-                        <Typography className='inputError'>
-                          {String(errors.lastName.message)}
-                        </Typography>
-                      )}
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Controller
-                  name='yearsInPratice'
-                  control={control}
-                  defaultValue={user.yearsInPratice}
-                  render={({ field }) => (
-                    <>
-                      <TextField
-                        {...field}
-                        size='small'
-                        type='number'
-                        label='Employed for many years'
-                        fullWidth
-                      />
-                      {errors?.yearsInPratice?.message && (
-                        <Typography className='inputError'>
-                          {String(errors.yearsInPratice.message)}
-                        </Typography>
-                      )}
-                    </>
-                  )}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Controller
-                  name='imageURL'
-                  control={control}
-                  defaultValue={user.imageURL}
-                  render={({ field }) => (
-                    <>
-                      <TextField
-                        {...field}
-                        size='small'
-                        label='Image'
-                        fullWidth
-                      />
-                    </>
-                  )}
-                />
-              </Grid>
-            </Grid>
+            )}
           </DialogContent>
           <DialogActions
             sx={{
@@ -284,12 +270,6 @@ export const Account = (props: AccountProps) => {
           </DialogActions>
         </form>
       </BootstrapDialog>
-      {isUpdateUserOpen && user && (
-        <DialogUpdateAccount
-          userId={user.personID}
-          setUpdateUserOpen={setUpdateUserOpen}
-        />
-      )}
     </>
   );
 };
