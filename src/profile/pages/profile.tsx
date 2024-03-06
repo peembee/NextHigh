@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { EmployeeResponse } from '../../services/API/response/employeeResponse';
+import { ProfilePaper } from '../components/profilePaper';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -34,8 +35,11 @@ export const Profile = (props: ProfileProps) => {
         aria-labelledby='customized-dialog-title'
         open={modalOpen}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id='customized-dialog-title'>
-          Modal Profile
+        <DialogTitle
+          sx={{ m: 0, p: 2, pr: 2, display: 'flex', justifyContent: 'center' }}
+          id='customized-dialog-title'
+        >
+          Profile
         </DialogTitle>
         <IconButton
           aria-label='close'
@@ -50,27 +54,8 @@ export const Profile = (props: ProfileProps) => {
           <CloseIcon />
         </IconButton>
         <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
-          </Typography>
+          <ProfilePaper />
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={() => setModalOpen(false)}>
-            Save changes
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
     </>
   );
