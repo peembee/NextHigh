@@ -1,61 +1,121 @@
-import { Box, Divider, Grid, Typography } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 import { ProfileCard } from './profileCard';
-import imagePingPing from '../../assets/pingpong.jpg';
+import imagePingPong from '../../assets/pingpong.jpg';
 import imageProgrammer from '../../assets/programmer.jpg';
 import dayjs from 'dayjs';
 import { PongResultResponse } from '../../services/API/response/pongResultResponse';
-import { ViewCarousel } from '@mui/icons-material';
+import { useFetchQuiz } from '../queries/useQueries/useFetchQuiz';
+import { QuizResultResponse } from '../../services/API/response/quizResultResponse';
+import { useContext, useEffect, useState } from 'react';
+import { AppContext } from '../../contexts/appContext';
+import { StatsDetailDropdown } from './statsDetailDropdown';
 
 type ProfileCardProps = {
   memberSince: string | undefined;
   rankEmpTitle?: string;
   rankPongTitle?: string;
   pongResults: PongResultResponse[];
+  quizResults: QuizResultResponse[];
 };
 
 export const ProfilePaper = (props: ProfileCardProps) => {
-  const { memberSince, rankEmpTitle, rankPongTitle, pongResults } = props;
+  const { memberSince, rankEmpTitle, rankPongTitle, pongResults, quizResults } =
+    props;
 
-  console.log('pongResults', pongResults);
+  const { user } = useContext(AppContext);
+  const [totalWins, setTotalWins] = useState(0);
+  const fetchAllQuizzes = useFetchQuiz();
 
-  function marginVictory(matchDataArray) {
-    let totalMatches = matchDataArray.length;
-    let totalWins = 0;
+  // set total victories
+  useEffect(() => {
+    let victory = 0;
 
-    matchDataArray.forEach((matchData) => {
+    pongResults.forEach((matchData) => {
       if (matchData.wonMatch === 'Victory') {
-        totalWins++;
+        victory++;
       }
     });
 
+    setTotalWins(victory);
+  }, [pongResults]);
+
+  const marginQuiz = () => {
+    if (!fetchAllQuizzes.data || !quizResults || quizResults.length === 0) {
+      return 0;
+    }
+    const totalQuizzes = fetchAllQuizzes.data.length;
+
+    const correctAnswers = quizResults.filter(
+      (myQuiz) => myQuiz.isCorrect === 'Correct answer'
+    );
+
+    const totalCorrect = correctAnswers.length;
+
+    const correctPercentage = (totalCorrect / totalQuizzes) * 100;
+    return correctPercentage.toFixed(1);
+  };
+
+  const marginVictory = () => {
+    if (!pongResults || pongResults.length === 0) {
+      return 0;
+    }
+
+    let totalMatches = pongResults.length;
+    let victory = 0;
+
+    pongResults.forEach((matchData) => {
+      if (matchData.wonMatch === 'Victory') {
+        victory++;
+      }
+    });
     let winPercentage = (totalWins / totalMatches) * 100;
     return winPercentage.toFixed(1);
-  }
+  };
 
   return (
     <>
       <Grid
         container
-        spacing={3}
+        spacing={10}
         p={2}
         pl={5}
         pr={5}
-        sx={{ display: 'flex', justifyContent: 'center' }}
+        pb={5}
+        sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'row' }}
       >
-        <ProfileCard
-          image={imagePingPing}
-          header='Rank'
-          rankTitle={rankEmpTitle}
-        />
+        <Grid item xs={12}>
+          <Grid container spacing={10} justifyContent='space-around'>
+            <Grid item>
+              <ProfileCard
+                image={imagePingPong}
+                header='Rank'
+                rankTitle={rankPongTitle}
+                imageTitle={'Victory ' + marginVictory() + '%'}
+                points={'Victories ' + totalWins.toString()}
+              />
+            </Grid>
+            <Grid item>
+              <ProfileCard
+                image={imageProgrammer}
+                header='Rank'
+                rankTitle={rankEmpTitle}
+                imageTitle={'Quiz ' + marginQuiz() + '%'}
+                points={`Points ${user?.empPoints.toString() ?? 'Unknown'}`}
+              />
+            </Grid>
+          </Grid>
+        </Grid>
 
-        <ProfileCard
-          image={imageProgrammer}
-          header='Rank'
-          rankTitle={rankPongTitle}
-          victoryMargin={'Victory ' + marginVictory(pongResults) + '%'}
-        />
+        <Grid item xs={12}>
+          <Divider sx={{ bgcolor: 'black' }} />
+          <StatsDetailDropdown
+            pongResults={pongResults ?? []}
+            quizResults={quizResults ?? []}
+          />
+        </Grid>
       </Grid>
-      <Divider />
+
+      <Divider sx={{ bgcolor: 'black' }} />
       <Typography
         variant='caption'
         color='text.secondary'
