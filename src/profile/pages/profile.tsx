@@ -1,14 +1,16 @@
-import Button from '@mui/material/Button';
 import { styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
 import { EmployeeResponse } from '../../services/API/response/employeeResponse';
 import { ProfilePaper } from '../components/profilePaper';
+import { useFetchEmpRankById } from '../queries/useQueries/useFetchEmpRankById';
+import { useFetchPongRankById } from '../queries/useQueries/useFetchPongRankById';
+import { useFetchPongResultById } from '../queries/useQueries/useFetchPongResultById';
+import { useFetchQuizResultById } from '../queries/useQueries/useFetchQuizResultById';
+import { useEffect } from 'react';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -16,6 +18,10 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
   '& .MuiDialogActions-root': {
     padding: theme.spacing(1),
+  },
+  '& .MuiPaper-root': {
+    maxWidth: '100%',
+    maxHeight: '90%', // Justera dialogens maximala bredd här
   },
 }));
 
@@ -28,35 +34,55 @@ type ProfileProps = {
 export const Profile = (props: ProfileProps) => {
   const { setModalOpen, modalOpen, user } = props;
 
+  const fetchEmpRank = useFetchEmpRankById(user?.personID);
+  const fetchPongRank = useFetchPongRankById(user?.personID);
+  const fetchPongResult = useFetchPongResultById(user?.personID);
+  const fetchQuizResult = useFetchQuizResultById(user?.personID);
+
   return (
     <>
-      <BootstrapDialog
-        onClose={() => setModalOpen(false)}
-        aria-labelledby='customized-dialog-title'
-        open={modalOpen}
-      >
-        <DialogTitle
-          sx={{ m: 0, p: 2, pr: 2, display: 'flex', justifyContent: 'center' }}
-          id='customized-dialog-title'
+      {user && fetchEmpRank.data && fetchPongRank.data && (
+        <BootstrapDialog
+          onClose={() => setModalOpen(false)}
+          aria-labelledby='customized-dialog-title'
+          open={modalOpen}
+          sx={{ maxHeight: '100%' }}
         >
-          Profile
-        </DialogTitle>
-        <IconButton
-          aria-label='close'
-          onClick={() => setModalOpen(false)}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
-        <DialogContent dividers>
-          <ProfilePaper />
-        </DialogContent>
-      </BootstrapDialog>
+          <DialogTitle
+            sx={{
+              m: 0,
+              p: 2,
+              pr: 2,
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+            id='customized-dialog-title'
+          >
+            STATS
+          </DialogTitle>
+          <IconButton
+            aria-label='close'
+            onClick={() => setModalOpen(false)}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+          <DialogContent dividers>
+            <ProfilePaper
+              memberSince={user.createdDate}
+              rankEmpTitle={fetchEmpRank.data.rankTitle}
+              rankPongTitle={fetchPongRank.data.rankTitle}
+              pongResults={fetchPongResult.data ?? []}
+              quizResults={fetchQuizResult.data ?? []}
+            />
+          </DialogContent>
+        </BootstrapDialog>
+      )}
     </>
   );
 };

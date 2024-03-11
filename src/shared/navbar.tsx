@@ -25,7 +25,7 @@ export const pages = [
   { id: 3, pageName: 'Staff', url: '/staff', toolTip: 'Meet our Staff' },
 ];
 const settings = [
-  { id: 1, settingName: 'Profile' },
+  { id: 1, settingName: 'Stats' },
   { id: 2, settingName: 'Account' },
   { id: 3, settingName: 'Logout' },
 ];
