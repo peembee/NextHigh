@@ -1,4 +1,5 @@
 export interface QuizResultResponse {
+  employeeResultID: number;
   fk_QuizID: number;
   username: string;
   quizHeading: string;

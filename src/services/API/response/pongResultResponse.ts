@@ -1,4 +1,5 @@
 export interface PongResultResponse {
+  matchGuid: string;
   pingPongResultID: number;
   username: string;
   myPoints: number;

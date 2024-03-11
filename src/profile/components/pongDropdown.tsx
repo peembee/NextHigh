@@ -19,7 +19,6 @@ export const PongDropdown = (props: PongDropdownProps) => {
   const { pongResults } = props;
   const { user } = useContext(AppContext);
 
-  console.log('poong', pongResults);
   return (
     <>
       <TableContainer component={Paper} sx={{ maxHeight: '500px' }}>
@@ -60,7 +59,10 @@ export const PongDropdown = (props: PongDropdownProps) => {
                 My Points
               </TableCell>
               <TableCell
-                sx={{ fontWeight: 'bold', color: 'whitesmoke' }}
+                sx={{
+                  fontWeight: 'bold',
+                  color: 'whitesmoke',
+                }}
                 align='left'
               >
                 Opponent
@@ -80,25 +82,29 @@ export const PongDropdown = (props: PongDropdownProps) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {pongResults.map((item, index) => (
-              <TableRow
-                key={item.pingPongResultID}
-                sx={{
-                  '&:last-child td, &:last-child th': { border: 0 },
-                  backgroundColor: index % 2 === 0 ? '#dcdcdc' : 'white',
-                }}
-              >
-                <TableCell align='left'>{item.wonMatch}</TableCell>
-                <TableCell align='left'>{user?.username}</TableCell>
-                <TableCell align='center'>{item.myPoints}</TableCell>
-                <TableCell align='left'>{item.opponentUsername}</TableCell>
-
-                <TableCell align='center'>{item.opponentPoints}</TableCell>
-                <TableCell align='left'>
-                  {dayjs(item.matchDate).format('YYYYMMDD')}
-                </TableCell>
-              </TableRow>
-            ))}
+            {pongResults
+              .sort(
+                (a, b) =>
+                  dayjs(b.matchDate).valueOf() - dayjs(a.matchDate).valueOf()
+              )
+              .map((item, index) => (
+                <TableRow
+                  key={item.pingPongResultID}
+                  sx={{
+                    '&:last-child td, &:last-child th': { border: 0 },
+                    backgroundColor: index % 2 === 0 ? '#dcdcdc' : 'white',
+                  }}
+                >
+                  <TableCell align='left'>{item.wonMatch}</TableCell>
+                  <TableCell align='left'>{user?.username}</TableCell>
+                  <TableCell align='left'>{item.myPoints}</TableCell>
+                  <TableCell align='left'>{item.opponentUsername}</TableCell>
+                  <TableCell align='left'>{item.opponentPoints}</TableCell>
+                  <TableCell align='left'>
+                    {dayjs(item.matchDate).format('dddd, MMMM DD, YYYY')}
+                  </TableCell>
+                </TableRow>
+              ))}
           </TableBody>
         </Table>
       </TableContainer>
