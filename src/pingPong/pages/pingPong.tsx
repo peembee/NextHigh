@@ -1,9 +1,12 @@
 import { Box } from '@mui/material';
+import { AddPingPongGame } from '../components/addPingPongGame';
 
 export const PingPong = () => {
   return (
     <>
-      <Box>Pinkpong</Box>
+      <Box>
+        <AddPingPongGame />
+      </Box>
     </>
   );
 };

@@ -93,8 +93,8 @@ export default function SignIn(props: SignInProps) {
                       <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='form-outline form-white mb-4'>
                           <input
-                            type='text' // Använd "text" om fältet är för användarnamn
-                            id='typeUsername' // Uppdatera id om det är mer relevant för användarnamnet
+                            type='text'
+                            id='typeUsername'
                             autoComplete='username'
                             placeholder='Username'
                             className='form-control form-control-lg'
