@@ -2,7 +2,7 @@ export interface EmployeeResponse {
   personID: number;
   username: string;
   email: string;
-  password: string;
+  password?: string;
   firstName: string;
   lastName: string;
   empPoints: number;

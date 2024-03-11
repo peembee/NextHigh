@@ -10,7 +10,6 @@ import { useFetchEmpRankById } from '../queries/useQueries/useFetchEmpRankById';
 import { useFetchPongRankById } from '../queries/useQueries/useFetchPongRankById';
 import { useFetchPongResultById } from '../queries/useQueries/useFetchPongResultById';
 import { useFetchQuizResultById } from '../queries/useQueries/useFetchQuizResultById';
-import { useEffect } from 'react';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
