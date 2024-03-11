@@ -1,6 +1,4 @@
 import Box from '@mui/material/Box';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
 import { useContext, useState } from 'react';
 import {
   Button,
