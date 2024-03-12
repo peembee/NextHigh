@@ -321,7 +321,16 @@ export const Quizzes = (props: QuizzesProps) => {
       ) : (
         <Grid container>
           <Grid item xs={12} display={'flex'} justifyContent={'center'}>
-            <Box>no more quiz</Box>
+            <Typography variant='h2' sx={{ color: 'rgba(128, 128, 128, 1)' }}>
+              Your Quiz is 100% answered
+              <Divider
+                sx={{
+                  paddingTop: '5px',
+                  width: '100%',
+                  borderBottom: '2px solid black', // Ökad tjocklek för bättre synlighet
+                }}
+              />
+            </Typography>
           </Grid>
         </Grid>
       )}
