@@ -1,15 +1,13 @@
 import Box from '@mui/material/Box';
 import { useContext, useState } from 'react';
 import {
+  Autocomplete,
   Button,
   CircularProgress,
   FormControl,
   Grid,
   InputAdornment,
-  InputLabel,
-  MenuItem,
   Paper,
-  Select,
   TextField,
   Typography,
 } from '@mui/material';
@@ -139,34 +137,30 @@ export const AddPingPongGame = () => {
                             render={({ field }) => (
                               <>
                                 <FormControl fullWidth>
-                                  <InputLabel id='opponent-username-label'>
-                                    Opponents Username
-                                  </InputLabel>
-                                  <Select
+                                  <Autocomplete
                                     {...field}
-                                    labelId='opponent-username-label'
-                                    label='Opponents Username'
-                                    onChange={(event) =>
-                                      field.onChange(event.target.value)
-                                    }
-                                  >
-                                    {fetchUsers.data.map(
-                                      (user: EmployeeResponse) => (
-                                        <MenuItem
-                                          key={user.personID}
-                                          value={user.username}
-                                        >
-                                          {user.username}
-                                        </MenuItem>
-                                      )
+                                    options={[
+                                      '',
+                                      ...fetchUsers.data.map(
+                                        (user: EmployeeResponse) =>
+                                          user.username
+                                      ),
+                                    ]}
+                                    renderInput={(params) => (
+                                      <TextField
+                                        {...params}
+                                        label='Opponents Username'
+                                        error={!!errors?.opponentUsername}
+                                        helperText={
+                                          errors?.opponentUsername?.message
+                                        }
+                                      />
                                     )}
-                                  </Select>
+                                    onChange={(event, value) =>
+                                      field.onChange(value)
+                                    }
+                                  />
                                 </FormControl>
-                                {errors?.opponentUsername?.message && (
-                                  <Typography className='inputError'>
-                                    {String(errors.opponentUsername.message)}
-                                  </Typography>
-                                )}
                               </>
                             )}
                           />
