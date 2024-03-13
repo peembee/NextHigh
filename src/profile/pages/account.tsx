@@ -1,5 +1,4 @@
 import { styled } from '@mui/material/styles';
-
 import Dialog from '@mui/material/Dialog';
 import { AccountDetails } from '../components/accountDetails';
 
