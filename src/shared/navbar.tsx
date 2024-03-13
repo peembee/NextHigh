@@ -80,7 +80,6 @@ export function Navbar(props: NavbarProps) {
       navigate(page);
     }
   };
-  console.log('addquiz', openAddQuiz);
 
   const handleOpenModal = (target: string) => {
     switch (target) {

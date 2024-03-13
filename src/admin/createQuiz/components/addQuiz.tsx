@@ -87,7 +87,6 @@ export const AddQuiz = (props: AddQuizProps) => {
   }, [watch('altOne'), watch('altTwo'), watch('altThree')]);
 
   const onSubmit = (data: QuizRequest) => {
-    console.log('data', data);
     setIsLoading(true);
     setTimeout(() => {
       createQuiz.mutate(data, {
