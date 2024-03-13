@@ -46,8 +46,6 @@ export const Quizzes = (props: QuizzesProps) => {
 
   const { handleSubmit, reset, watch, setValue, control } = formMethods;
 
-  console.log('watch', watch());
-
   useEffect(() => {
     if (fetchQuiz.data && fetchQuiz.data.result) {
       if (fetchQuiz.data.result === 'MissingData') {

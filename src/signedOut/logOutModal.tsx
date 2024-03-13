@@ -11,6 +11,7 @@ import { DialogContentText } from '@mui/material';
 import { useContext } from 'react';
 import { AppContext } from '../contexts/appContext';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -29,11 +30,13 @@ type LogOutProps = {
 export const LogOut = (props: LogOutProps) => {
   const { setModalOpen, modalOpen } = props;
   const { setUser } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const handleLogOut = () => {
     setUser(null);
     setModalOpen(false);
     toast.success('You are now logged out');
+    navigate('/');
   };
 
   return (

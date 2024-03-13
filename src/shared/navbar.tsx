@@ -12,12 +12,13 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Account } from '../profile/pages/account';
 import { LogOut } from '../signedOut/logOutModal';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Profile } from '../profile/pages/profile';
 import { AppContext } from '../contexts/appContext';
+import { AddQuiz } from '../admin/createQuiz/components/addQuiz';
 
 export const pages = [
   { id: 1, pageName: 'Home', url: '/home', toolTip: 'Lets go Home' },
@@ -42,12 +43,18 @@ export function Navbar(props: NavbarProps) {
   const [openProfileModal, setOpenProfileModal] = useState<boolean>(false);
   const [openAccountModal, setOpenAccountModal] = useState<boolean>(false);
   const [openLogoutModal, setOpenLogoutModal] = useState<boolean>(false);
+  const [openAddQuiz, setOpenAddQuiz] = useState<boolean>(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   //user context
   const { user } = useContext(AppContext);
   console.log('LoggedInUser:', user);
+
+  useEffect(() => {
+    setActivePage(location.pathname);
+  }, [location.pathname]);
 
   // Navbar-actions
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -66,8 +73,12 @@ export function Navbar(props: NavbarProps) {
   };
   // Page-actions
   const goToPage = (page: string) => {
-    setActivePage(page);
-    navigate(page);
+    if (!user && (page === '/pingpong' || page === '/staff')) {
+      setSignInModalOpen(true);
+    } else {
+      setActivePage(page);
+      navigate(page);
+    }
   };
 
   const handleOpenModal = (target: string) => {
@@ -83,6 +94,9 @@ export function Navbar(props: NavbarProps) {
         break;
       case 'login':
         setSignInModalOpen(true);
+        break;
+      case 'AddQuiz':
+        setOpenAddQuiz(true);
         break;
       default:
         break;
@@ -296,6 +310,16 @@ export function Navbar(props: NavbarProps) {
                   open={Boolean(anchorElUser)}
                   onClose={handleCloseUserMenu}
                 >
+                  {user.isAdmin && (
+                    <MenuItem key={user.personID} onClick={handleCloseUserMenu}>
+                      <Typography
+                        onClick={() => handleOpenModal('AddQuiz')}
+                        textAlign='center'
+                      >
+                        Add Quiz
+                      </Typography>
+                    </MenuItem>
+                  )}
                   {settings.map((setting) => (
                     <MenuItem key={setting.id} onClick={handleCloseUserMenu}>
                       <Typography
@@ -309,7 +333,6 @@ export function Navbar(props: NavbarProps) {
                 </Menu>
               </Box>
             )}
-            {/* --------- */}
           </Toolbar>
         </Container>
       </AppBar>
@@ -328,6 +351,9 @@ export function Navbar(props: NavbarProps) {
       )}
       {openLogoutModal && (
         <LogOut setModalOpen={setOpenLogoutModal} modalOpen={openLogoutModal} />
+      )}
+      {openAddQuiz && (
+        <AddQuiz setModalOpen={setOpenAddQuiz} modalOpen={openAddQuiz} />
       )}
     </>
   );
