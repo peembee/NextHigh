@@ -264,21 +264,6 @@ export function Navbar(props: NavbarProps) {
               <Button
                 onClick={() => handleOpenModal('login')}
                 variant='contained'
-                sx={{
-                  width: '100px',
-                  background: `linear-gradient(
-                              109.6deg,
-                              rgb(11, 132, 145) 2.1%,
-                              rgb(20, 30, 10) 61.2%
-                            )`,
-                  transition: 'transform 0.2s',
-                  '&:hover': {
-                    transform: 'scale(1.05)',
-                  },
-                  '&:active': {
-                    transform: 'scale(0.95)',
-                  },
-                }}
               >
                 Log in
               </Button>
