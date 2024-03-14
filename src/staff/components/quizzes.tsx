@@ -1,4 +1,14 @@
-import { Box, Button, Divider, Grid, Paper, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Divider,
+  Grid,
+  Paper,
+  Typography,
+  useMediaQuery,
+  useTheme,
+} from '@mui/material';
 import { useFetchUnAnsweredQuizzesById } from '../queries/useQueries/useFetchUnAnsweredQuizzesById';
 import { Controller, useForm } from 'react-hook-form';
 import { QuizResultRequest } from '../../services/API/request/quizResultRequest';
@@ -21,9 +31,25 @@ export const Quizzes = (props: QuizzesProps) => {
   const [quiz, setQuiz] = useState<QuizResponse | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [correctAnswer, setCorrectAnswer] = useState<string | null>(null);
+  const [timeoutId, setTimeoutId] = useState<number | null>(null);
 
   const green = 'linear-gradient(to top, #9be15d 0%, #00e3ae 100%)';
   const red = 'linear-gradient(to top, #ff0844 0%, #ffb199 100%)';
+
+  //hoover:
+  const theme = useTheme();
+  const isXsScreen = useMediaQuery(theme.breakpoints.down('xs'));
+
+  let hoverStyles = {}; // Stilerna för hover-effekten
+
+  if (!isXsScreen) {
+    hoverStyles = {
+      '&:hover': {
+        transform: 'scale(1.1)',
+      },
+    };
+  }
 
   const fetchQuiz = useFetchUnAnsweredQuizzesById(userId);
   const createQuizResult = useCreateQuizResults();
@@ -31,7 +57,6 @@ export const Quizzes = (props: QuizzesProps) => {
   useEffect(() => {
     if (fetchQuiz.data) {
       setQuiz(fetchQuiz.data.result);
-      setValue;
     }
   }, [fetchQuiz.data]);
 
@@ -44,7 +69,7 @@ export const Quizzes = (props: QuizzesProps) => {
     },
   });
 
-  const { handleSubmit, reset, watch, setValue, control } = formMethods;
+  const { handleSubmit, reset, setValue, control } = formMethods;
 
   useEffect(() => {
     if (fetchQuiz.data && fetchQuiz.data.result) {
@@ -65,19 +90,28 @@ export const Quizzes = (props: QuizzesProps) => {
     setLoading(true);
     createQuizResult.mutate(data, {
       onSuccess: (data) => {
+        setCorrectAnswer(data.correctAnswer);
         if (data.isCorrect) {
-          setSelectedAnswer(data.guessedAnswer);
           setIsCorrect(true);
-          fetchUpdatedUser(userId);
         } else {
           setIsCorrect(false);
         }
-        setTimeout(() => {
+
+        const newTimeoutId = setTimeout(() => {
           setSelectedAnswer(null);
           setIsCorrect(null);
           fetchNewQuiz();
+          setCorrectAnswer(null);
           reset();
-        }, 300);
+        }, 1500);
+
+        if (timeoutId !== null) {
+          clearTimeout(timeoutId);
+        }
+
+        setTimeoutId(newTimeoutId);
+
+        fetchUpdatedUser(userId);
       },
       onError: (error) => {
         toast.error('An error occurred. Please try again later.');
@@ -88,24 +122,42 @@ export const Quizzes = (props: QuizzesProps) => {
     });
   };
 
+  const handleColors = (quiz: string) => {
+    if (isCorrect !== null && correctAnswer !== null) {
+      if (isCorrect && selectedAnswer === quiz) {
+        return green;
+      }
+      if (!isCorrect && correctAnswer === quiz) {
+        return green;
+      }
+      if (!isCorrect && selectedAnswer === quiz) {
+        return red;
+      } else {
+        return 'transparent';
+      }
+    }
+  };
+
   return (
     <>
       {quiz !== null ? (
         <Grid container>
-          <Grid item xs={12} display={'flex'} justifyContent={'center'}>
+          <Grid
+            item
+            xs={12}
+            display={'flex'}
+            justifyContent={'center'}
+            sx={{
+              maxWidth: {
+                md: '100rem',
+                xs: '100%',
+              },
+            }}
+          >
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Paper
-                elevation={1}
-                sx={{
-                  background:
-                    'linear-gradient(135deg, rgba(0, 128, 0, 0.3), rgba(0, 255, 0, 0.1))',
-                  minWidth: '50rem',
-                  paddingLeft: '50px',
-                  paddingRight: '50px',
-                }}
-              >
-                <Grid container pl={2} pr={2} pb={1} pt={1}>
-                  <>
+              <Grid container pl={5} pr={5} pb={5} pt={5}>
+                <>
+                  {!fetchQuiz.isFetching ? (
                     <Grid
                       item
                       xs={12}
@@ -116,14 +168,20 @@ export const Quizzes = (props: QuizzesProps) => {
                         item
                         xs={12}
                         display={'flex'}
-                        justifyContent={'center'}
+                        justifyContent={'space-between'}
                         pb={1}
                       >
                         <Typography
                           sx={{ color: 'rgba(0, 0, 0, 0.50)' }}
-                          variant='h6'
+                          variant='body2'
                         >
                           POINTS {quiz.points}
+                        </Typography>
+                        <Typography
+                          sx={{ color: 'rgba(0, 0, 0, 0.50)' }}
+                          variant='body2'
+                        >
+                          INCORRECT ANSWER - 4 POINTS
                         </Typography>
                       </Grid>
 
@@ -144,13 +202,6 @@ export const Quizzes = (props: QuizzesProps) => {
                                 <Typography variant='h5'>
                                   {quiz.quizHeading}
                                 </Typography>
-                                <Divider
-                                  sx={{
-                                    paddingTop: '5px',
-                                    width: '100%',
-                                    borderBottom: '3px solid black', // Ökad tjocklek för bättre synlighet
-                                  }}
-                                />
                               </>
                             )}
                           />
@@ -162,16 +213,13 @@ export const Quizzes = (props: QuizzesProps) => {
                         xs={12}
                         display={'flex'}
                         justifyContent={'center'}
-                        border={'1px solid turquoise'}
                         mb={1}
                         borderRadius={3}
                         sx={{
-                          background: 'rgba(0, 206, 209, 0.5)',
-                          transition: 'transform 0.2s',
-                          '&:hover': {
-                            background: 'rgba(0, 206, 209, 0.8)',
-                            transform: 'scale(1.1)',
-                          },
+                          backgroundColor: '#090947',
+                          backgroundImage:
+                            'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
+                          ...hoverStyles,
                         }}
                       >
                         <Controller
@@ -181,11 +229,14 @@ export const Quizzes = (props: QuizzesProps) => {
                           render={({ field }) => (
                             <Button
                               disabled={loading}
+                              size='large'
                               disableRipple
                               sx={{
                                 borderRadius: '10px',
                                 fontWeight: 'bold',
-                                color: 'black',
+                                color: 'white',
+                                textTransform: 'none',
+                                fontSize: '18px',
                               }}
                               fullWidth
                               type='submit'
@@ -194,12 +245,7 @@ export const Quizzes = (props: QuizzesProps) => {
                                 field.onChange(quiz.altOne);
                               }}
                               style={{
-                                background:
-                                  selectedAnswer === quiz.altOne
-                                    ? isCorrect
-                                      ? green
-                                      : red
-                                    : 'transparent',
+                                background: handleColors(quiz.altOne),
                               }}
                             >
                               {quiz.altOne}
@@ -212,17 +258,13 @@ export const Quizzes = (props: QuizzesProps) => {
                         xs={12}
                         display={'flex'}
                         justifyContent={'center'}
-                        border={'1px solid turquoise'}
                         mb={1}
                         borderRadius={3}
                         sx={{
-                          background: 'rgba(0, 206, 209, 0.5)',
-                          transition: 'transform 0.2s',
-
-                          '&:hover': {
-                            background: 'rgba(0, 206, 209, 0.8)',
-                            transform: 'scale(1.1)',
-                          },
+                          backgroundColor: '#090947',
+                          backgroundImage:
+                            'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
+                          ...hoverStyles,
                         }}
                       >
                         <Controller
@@ -232,11 +274,14 @@ export const Quizzes = (props: QuizzesProps) => {
                           render={({ field }) => (
                             <Button
                               disabled={loading}
+                              size='large'
                               disableRipple
                               sx={{
                                 borderRadius: '10px',
                                 fontWeight: 'bold',
-                                color: 'black',
+                                color: 'white',
+                                textTransform: 'none',
+                                fontSize: '18px',
                               }}
                               fullWidth
                               type='submit'
@@ -245,12 +290,7 @@ export const Quizzes = (props: QuizzesProps) => {
                                 field.onChange(quiz.altTwo);
                               }}
                               style={{
-                                background:
-                                  selectedAnswer === quiz.altTwo
-                                    ? isCorrect
-                                      ? green
-                                      : red
-                                    : 'transparent',
+                                background: handleColors(quiz.altTwo),
                               }}
                             >
                               {quiz.altTwo}
@@ -264,16 +304,13 @@ export const Quizzes = (props: QuizzesProps) => {
                         xs={12}
                         display={'flex'}
                         justifyContent={'center'}
-                        border={'1px solid turquoise'}
                         mb={1}
                         borderRadius={3}
                         sx={{
-                          background: 'rgba(0, 206, 209, 0.5)',
-                          transition: 'transform 0.2s',
-                          '&:hover': {
-                            background: 'rgba(0, 206, 209, 0.8)',
-                            transform: 'scale(1.1)',
-                          },
+                          backgroundColor: '#090947',
+                          backgroundImage:
+                            'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
+                          ...hoverStyles,
                         }}
                       >
                         <Controller
@@ -283,11 +320,14 @@ export const Quizzes = (props: QuizzesProps) => {
                           render={({ field }) => (
                             <Button
                               disabled={loading}
+                              size='large'
                               disableRipple
                               sx={{
                                 borderRadius: '10px',
                                 fontWeight: 'bold',
-                                color: 'black',
+                                color: 'white',
+                                textTransform: 'none',
+                                fontSize: '18px',
                               }}
                               fullWidth
                               type='submit'
@@ -296,12 +336,7 @@ export const Quizzes = (props: QuizzesProps) => {
                                 field.onChange(quiz.altThree);
                               }}
                               style={{
-                                background:
-                                  selectedAnswer === quiz.altThree
-                                    ? isCorrect
-                                      ? green
-                                      : red
-                                    : 'transparent',
+                                background: handleColors(quiz.altThree),
                               }}
                             >
                               {quiz.altThree}
@@ -310,9 +345,11 @@ export const Quizzes = (props: QuizzesProps) => {
                         />
                       </Grid>
                     </Grid>
-                  </>
-                </Grid>
-              </Paper>
+                  ) : (
+                    <CircularProgress color='primary' />
+                  )}
+                </>
+              </Grid>
             </form>
           </Grid>
         </Grid>

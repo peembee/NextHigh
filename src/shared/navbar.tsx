@@ -11,7 +11,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
 import { useContext, useEffect, useState } from 'react';
 import { Account } from '../profile/pages/account';
 import { LogOut } from '../signedOut/logOutModal';
@@ -109,35 +108,32 @@ export function Navbar(props: NavbarProps) {
         position='fixed'
         sx={{
           background: `linear-gradient(
-      109.6deg,
-      rgb(0, 0, 0) 11.2%,
-      rgb(11, 132, 145) 91.1%
+      90deg,
+      rgb(242, 129, 179) 5%,
+      rgb(13, 12, 72) 100%
     )`,
         }}
       >
         <Container maxWidth='xl'>
           <Toolbar disableGutters>
-            <AdbIcon sx={{ display: { xs: 'none', md: 'flex' } }} />
-            <Typography
-              variant='h6'
-              noWrap
+            <Box
               component='a'
-              onClick={() =>
-                activePage === '/home' ? null : goToPage('/home')
-              }
               sx={{
-                mr: 5,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-                cursor: activePage === '/home' ? 'default' : 'pointer',
+                display: { xs: 'none', md: 'block' },
               }}
             >
-              LOGO
-            </Typography>
+              <img
+                onClick={() =>
+                  activePage === '/home' ? null : goToPage('/home')
+                }
+                style={{
+                  cursor: activePage === '/home' ? 'default' : 'pointer',
+                  maxHeight: '50px',
+                }}
+                src='https://i.ibb.co/mXfh53J/Next-High-logotypejpeg.png'
+                alt='Next-High-logotypejpeg'
+              />
+            </Box>
 
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
@@ -195,24 +191,26 @@ export function Navbar(props: NavbarProps) {
                 ))}
               </Menu>
             </Box>
-            <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
-            <Typography
-              variant='h5'
-              noWrap
+            <Box
               component='a'
               sx={{
                 mr: 2,
                 display: { xs: 'flex', md: 'none' },
                 flexGrow: 1,
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
               }}
             >
-              LOGO
-            </Typography>
+              <img
+                onClick={() =>
+                  activePage === '/home' ? null : goToPage('/home')
+                }
+                style={{
+                  cursor: activePage === '/home' ? 'default' : 'pointer',
+                  maxHeight: '40px',
+                }}
+                src='https://i.ibb.co/mXfh53J/Next-High-logotypejpeg.png'
+                alt='Next-High-logotypejpeg'
+              />
+            </Box>
             {/* --------- */}
             <Box
               ml={2}

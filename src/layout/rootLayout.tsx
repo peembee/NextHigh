@@ -18,7 +18,7 @@ export function RootLayout() {
           display: 'flex',
           flexDirection: 'column',
           minHeight: '100vh',
-          background: 'linear-gradient(to top, #fff1eb 0%, #ace0f9 100%);',
+          background: '#F5F5F5',
         }}
       >
         <Navbar setSignInModalOpen={setSignInModalOpen} />

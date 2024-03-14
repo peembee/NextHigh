@@ -87,7 +87,8 @@ export const ProfilePaper = (props: ProfileCardProps) => {
           <Grid container spacing={10} justifyContent='space-around'>
             <Grid item>
               <ProfileCard
-                image={imagePingPong}
+                image='https://i.ibb.co/BnGByPB/pingpong.jpg'
+                alt='PingPong Logo'
                 header='Rank'
                 rankTitle={rankPongTitle}
                 imageTitle={'Victory ' + marginVictory() + '%'}
@@ -96,8 +97,9 @@ export const ProfilePaper = (props: ProfileCardProps) => {
             </Grid>
             <Grid item>
               <ProfileCard
-                image={imageProgrammer}
+                image='https://i.ibb.co/x1SjHM3/programmer.jpg'
                 header='Rank'
+                alt='Programmer Logo'
                 rankTitle={rankEmpTitle}
                 imageTitle={'Quiz ' + marginQuiz() + '%'}
                 points={`Points ${user?.empPoints.toString() ?? 'Unknown'}`}

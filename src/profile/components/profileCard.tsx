@@ -12,11 +12,12 @@ type ProfileCardProps = {
   points?: string;
   rankTitle?: string;
   image?: string;
+  alt?: string;
   imageTitle?: string;
 };
 
 export const ProfileCard = (props: ProfileCardProps) => {
-  const { header, points, rankTitle, image, imageTitle } = props;
+  const { header, points, rankTitle, image, imageTitle, alt } = props;
 
   return (
     <Grid item>
@@ -27,12 +28,7 @@ export const ProfileCard = (props: ProfileCardProps) => {
           '&:hover': { transform: 'scale(1.1)' },
         }}
       >
-        <CardMedia
-          component='img'
-          height='300'
-          image={image}
-          alt='green iguana'
-        />
+        <CardMedia component='img' height='300' image={image} alt={alt} />
         <CardContent
           sx={{
             backgroundColor: '#090947',
@@ -95,4 +91,5 @@ ProfileCard.defaultProps = {
   points: null,
   imageTitle: null,
   header: null,
+  alt: null,
 };
