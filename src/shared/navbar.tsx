@@ -131,7 +131,7 @@ export function Navbar(props: NavbarProps) {
                   maxHeight: '50px',
                 }}
                 src='https://i.ibb.co/mXfh53J/Next-High-logotypejpeg.png'
-                alt='Next-High-logotypejpeg'
+                alt='Next-High-logotype'
               />
             </Box>
 
@@ -272,8 +272,8 @@ export function Navbar(props: NavbarProps) {
                 <Tooltip title='Open settings' placement='left'>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                     <Avatar
-                      alt='Remy Sharp'
-                      src='/static/images/avatar/2.jpg'
+                      alt='Standard Profile Pic'
+                      src='https://i.ibb.co/0cRjfdV/robotpong.jpg'
                     />
                   </IconButton>
                 </Tooltip>

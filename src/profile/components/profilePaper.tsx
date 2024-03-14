@@ -1,4 +1,4 @@
-import { Divider, Grid, Typography } from '@mui/material';
+import { Avatar, Divider, Grid, Typography } from '@mui/material';
 import { ProfileCard } from './profileCard';
 import imagePingPong from '../../assets/pingpong.jpg';
 import imageProgrammer from '../../assets/programmer.jpg';
@@ -95,6 +95,7 @@ export const ProfilePaper = (props: ProfileCardProps) => {
                 points={'Victories ' + totalWins.toString()}
               />
             </Grid>
+            <Grid item></Grid>
             <Grid item>
               <ProfileCard
                 image='https://i.ibb.co/x1SjHM3/programmer.jpg'

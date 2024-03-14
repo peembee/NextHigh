@@ -210,7 +210,7 @@ export const AccountDetails = (props: AccountDetailsProps) => {
                 )}
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            {/* <Grid item xs={12} md={6}>
               <Controller
                 name='imageURL'
                 control={control}
@@ -226,7 +226,7 @@ export const AccountDetails = (props: AccountDetailsProps) => {
                   </>
                 )}
               />
-            </Grid>
+            </Grid> */}
           </Grid>
         )}
       </DialogContent>

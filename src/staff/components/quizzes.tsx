@@ -181,7 +181,7 @@ export const Quizzes = (props: QuizzesProps) => {
                           sx={{ color: 'rgba(0, 0, 0, 0.50)' }}
                           variant='body2'
                         >
-                          INCORRECT ANSWER - 4 POINTS
+                          INCORRECT ANSWER -{quiz.points} POINTS
                         </Typography>
                       </Grid>
 
