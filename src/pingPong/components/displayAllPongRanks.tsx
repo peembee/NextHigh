@@ -9,14 +9,14 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { useFetchUser } from '../../pingPong/queries/useQueries/useFetchUser';
-import { UserDataFetcher } from './userDataFetcher';
 import { EmployeeResponse } from '../../services/API/response/employeeResponse';
 import { useEffect, useState } from 'react';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { useFetchUser } from '../queries/useQueries/useFetchUser';
+import { UserDataPongFetcher } from './userDataPongFetcher';
 
-export const DisplayRanks = () => {
+export const DisplayAllPongRanks = () => {
   const [cards, setCards] = useState<EmployeeResponse[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [slideDirection, setSlideDirection] = useState<
@@ -71,11 +71,11 @@ export const DisplayRanks = () => {
         >
           {fetchAllUsers.data && fetchAllUsers.data.length > 0 ? (
             fetchAllUsers.data
-              .sort((a, b) => b.empPoints - a.empPoints) // Sortera i fallande ordning baserat på empPoints
+              .sort((a, b) => b.pongVictories - a.pongVictories) // Sortera i fallande ordning baserat på empPoints
               .slice(0, 3) // Hämta de tre första elementen
               .map((user: EmployeeResponse) => (
                 <Grid item key={user.personID}>
-                  <UserDataFetcher user={user} />
+                  <UserDataPongFetcher user={user} />
                 </Grid>
               ))
           ) : (
@@ -139,7 +139,7 @@ export const DisplayRanks = () => {
                     }}
                   >
                     {fetchAllUsers.data
-                      .sort((a, b) => b.empPoints - a.empPoints)
+                      .sort((a, b) => b.pongVictories - a.pongVictories)
                       .map((card: EmployeeResponse, index) => (
                         <Box
                           key={card.personID}
@@ -163,7 +163,7 @@ export const DisplayRanks = () => {
                                   currentPage * cardsPerPage + cardsPerPage
                                 )
                                 .map((card: EmployeeResponse) => (
-                                  <UserDataFetcher
+                                  <UserDataPongFetcher
                                     key={card.personID}
                                     user={card}
                                   />
@@ -206,10 +206,10 @@ export const DisplayRanks = () => {
             >
               {fetchAllUsers.data && fetchAllUsers.data.length > 0 ? (
                 fetchAllUsers.data
-                  .sort((a, b) => b.empPoints - a.empPoints)
+                  .sort((a, b) => b.pongVictories - a.pongVictories)
                   .map((user: EmployeeResponse) => (
                     <Grid item key={user.personID}>
-                      <UserDataFetcher user={user} />
+                      <UserDataPongFetcher user={user} />
                     </Grid>
                   ))
               ) : (

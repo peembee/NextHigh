@@ -22,10 +22,15 @@ import { useFetchUser } from '../queries/useQueries/useFetchUser';
 import { EmployeeResponse } from '../../services/API/response/employeeResponse';
 import { useCreatePongResults } from '../queries/useMutations/useCreatePongResult';
 import { toast } from 'react-toastify';
+import { useQueryClient } from '@tanstack/react-query';
+import { PongResultKeys } from '../../profile/queries/pongResultKeys';
+import { PongRankKeys } from '../../profile/queries/pongRankKeys';
+import { EmployeeKeys } from '../../staff/queries/employeeKeys';
 
 export const AddPingPongGame = () => {
   const { user } = useContext(AppContext);
   const [loading, setLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const fetchUsers = useFetchUser();
   const createResult = useCreatePongResults();
@@ -52,6 +57,9 @@ export const AddPingPongGame = () => {
     setTimeout(() => {
       createResult.mutate(data, {
         onSuccess: (data) => {
+          queryClient.invalidateQueries({ queryKey: PongRankKeys.all });
+          queryClient.invalidateQueries({ queryKey: PongResultKeys.all });
+          queryClient.invalidateQueries({ queryKey: EmployeeKeys.all });
           toast.success('You have successfully registered the game!');
           reset();
         },
@@ -141,10 +149,16 @@ export const AddPingPongGame = () => {
                                     {...field}
                                     options={[
                                       '',
-                                      ...fetchUsers.data.map(
-                                        (user: EmployeeResponse) =>
-                                          user.username
-                                      ),
+                                      ...fetchUsers.data
+                                        .filter(
+                                          (filterUser: EmployeeResponse) =>
+                                            filterUser.username !==
+                                            user?.username
+                                        )
+                                        .map(
+                                          (user: EmployeeResponse) =>
+                                            user.username
+                                        ),
                                     ]}
                                     renderInput={(params) => (
                                       <TextField
