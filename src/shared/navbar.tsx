@@ -230,10 +230,10 @@ export function Navbar(props: NavbarProps) {
                     ml: 7,
                     my: 2,
                     color:
-                      activePage === page.url ? 'rgb(176, 151, 151)' : 'white',
+                      activePage === page.url ? 'rgb(13, 12, 72)' : 'white',
                     display: 'inline',
                     '&:hover': {
-                      color: 'rgb(176, 151, 151)',
+                      color: 'rgb(13, 12, 72)',
                       transition: '0.2s',
                     },
                   }}
@@ -245,7 +245,7 @@ export function Navbar(props: NavbarProps) {
                         fontWeight: 'bold',
                         color:
                           activePage === page.url
-                            ? 'rgb(176, 151, 151)'
+                            ? 'rgb(13, 12, 72)'
                             : 'inherit',
                         transition: '0.2s',
                       }}

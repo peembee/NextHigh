@@ -14,10 +14,11 @@ type ProfileCardProps = {
   image?: string;
   alt?: string;
   imageTitle?: string;
+  username?: string;
 };
 
 export const ProfileCard = (props: ProfileCardProps) => {
-  const { header, points, rankTitle, image, imageTitle, alt } = props;
+  const { header, points, rankTitle, image, imageTitle, alt, username } = props;
 
   return (
     <Grid item>
@@ -35,6 +36,23 @@ export const ProfileCard = (props: ProfileCardProps) => {
             backgroundImage: 'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
           }}
         >
+          {username && (
+            <Typography
+              pt={1}
+              sx={{
+                textAlign: 'center',
+                marginBottom: '1rem',
+                backgroundColor: 'rgba(255, 255, 260, 0.05)',
+                padding: '0.5rem',
+                borderRadius: '0.5rem',
+              }}
+              variant='h4'
+              component='div'
+              color={'whitesmoke'}
+            >
+              {username}
+            </Typography>
+          )}
           <Typography
             gutterBottom
             variant='h6'
@@ -57,6 +75,7 @@ export const ProfileCard = (props: ProfileCardProps) => {
           >
             {header}
           </Typography>
+
           <Typography
             pb={1}
             sx={{ textAlign: 'center' }}
@@ -92,4 +111,5 @@ ProfileCard.defaultProps = {
   imageTitle: null,
   header: null,
   alt: null,
+  username: null,
 };

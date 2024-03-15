@@ -119,13 +119,15 @@ export const ProfilePaper = (props: ProfileCardProps) => {
       </Grid>
 
       <Divider sx={{ bgcolor: 'black' }} />
-      <Typography
-        variant='caption'
-        color='text.secondary'
-        sx={{ justifyContent: 'left' }}
-      >
-        Active since {dayjs(memberSince).format('YYYY-MM-DD')}
-      </Typography>
+      {memberSince !== undefined && (
+        <Typography
+          variant='caption'
+          color='text.secondary'
+          sx={{ justifyContent: 'left' }}
+        >
+          Active since {dayjs(memberSince).format('YYYY-MM-DD')}
+        </Typography>
+      )}
     </>
   );
 };
