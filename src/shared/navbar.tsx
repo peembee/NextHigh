@@ -49,7 +49,6 @@ export function Navbar(props: NavbarProps) {
 
   //user context
   const { user } = useContext(AppContext);
-  console.log('LoggedInUser:', user);
 
   useEffect(() => {
     setActivePage(location.pathname);
