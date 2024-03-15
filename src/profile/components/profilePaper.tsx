@@ -24,19 +24,6 @@ export const ProfilePaper = (props: ProfileCardProps) => {
   const [totalWins, setTotalWins] = useState(0);
   const fetchAllQuizzes = useFetchQuiz();
 
-  // set total victories
-  useEffect(() => {
-    let victory = 0;
-
-    pongResults.forEach((matchData) => {
-      if (matchData.wonMatch === 'Victory') {
-        victory++;
-      }
-    });
-
-    setTotalWins(victory);
-  }, [pongResults]);
-
   const marginQuiz = () => {
     if (!fetchAllQuizzes.data || !quizResults || quizResults.length === 0) {
       return 0;
@@ -54,20 +41,15 @@ export const ProfilePaper = (props: ProfileCardProps) => {
   };
 
   const marginVictory = () => {
-    if (!pongResults || pongResults.length === 0) {
-      return 0;
-    }
-
-    let totalMatches = pongResults.length;
-    let victory = 0;
-
-    pongResults.forEach((matchData) => {
-      if (matchData.wonMatch === 'Victory') {
-        victory++;
+    if (user !== null) {
+      if (!pongResults || pongResults.length === 0) {
+        return 0;
       }
-    });
-    let winPercentage = (totalWins / totalMatches) * 100;
-    return winPercentage.toFixed(1);
+      let totalMatches = pongResults.length;
+
+      let winPercentage = (user.pongVictories / totalMatches) * 100;
+      return winPercentage.toFixed(1);
+    }
   };
 
   return (
@@ -90,7 +72,7 @@ export const ProfilePaper = (props: ProfileCardProps) => {
                 header='Rank'
                 rankTitle={rankPongTitle}
                 imageTitle={'Victory ' + marginVictory() + '%'}
-                points={'Victories ' + totalWins.toString()}
+                points={user?.pongVictories.toString()}
               />
             </Grid>
             <Grid item></Grid>

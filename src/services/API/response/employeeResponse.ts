@@ -12,4 +12,5 @@ export interface EmployeeResponse {
   fK_PingPongRankID?: number;
   imageURL?: string;
   isAdmin?: boolean;
+  pongVictories: number;
 }

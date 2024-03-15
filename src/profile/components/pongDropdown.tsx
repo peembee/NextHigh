@@ -95,11 +95,46 @@ export const PongDropdown = (props: PongDropdownProps) => {
                     backgroundColor: index % 2 === 0 ? '#dcdcdc' : 'white',
                   }}
                 >
-                  <TableCell align='left'>{item.wonMatch}</TableCell>
-                  <TableCell align='left'>{user?.username}</TableCell>
-                  <TableCell align='left'>{item.myPoints}</TableCell>
-                  <TableCell align='left'>{item.opponentUsername}</TableCell>
-                  <TableCell align='left'>{item.opponentPoints}</TableCell>
+                  <TableCell
+                    sx={{
+                      color: item.wonMatch === 'Defeat' ? 'red' : 'green',
+                    }}
+                    align='left'
+                  >
+                    {item.wonMatch}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: item.wonMatch === 'Defeat' ? 'red' : 'green',
+                    }}
+                    align='left'
+                  >
+                    {user?.username}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: item.wonMatch === 'Defeat' ? 'red' : 'green',
+                    }}
+                    align='left'
+                  >
+                    {item.myPoints}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: item.wonMatch === 'Defeat' ? 'green' : 'red',
+                    }}
+                    align='left'
+                  >
+                    {item.opponentUsername}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color: item.wonMatch === 'Defeat' ? 'green' : 'red',
+                    }}
+                    align='left'
+                  >
+                    {item.opponentPoints}
+                  </TableCell>
                   <TableCell align='left'>
                     {dayjs(item.matchDate).format('dddd, MMMM DD, YYYY')}
                   </TableCell>
