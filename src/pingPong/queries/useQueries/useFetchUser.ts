@@ -13,5 +13,6 @@ export const useFetchUser = () => {
   return useQuery({
     queryKey: EmployeeKeys.all,
     queryFn: fetchUser,
+    retry: 3,
   });
 };

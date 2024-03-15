@@ -13,5 +13,6 @@ export const useFetchQuizResultById = (id: number) => {
   return useQuery({
     queryKey: QuizResultKeys.byId(id),
     queryFn: () => getQuizResultById(id),
+    retry: 3,
   });
 };

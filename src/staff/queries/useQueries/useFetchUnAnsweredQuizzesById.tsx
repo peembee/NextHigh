@@ -13,5 +13,6 @@ export const useFetchUnAnsweredQuizzesById = (id: number) => {
   return useQuery({
     queryKey: QuizKeys.byId(id),
     queryFn: () => FetchUnAnsweredQuizzes(id),
+    retry: 3,
   });
 };

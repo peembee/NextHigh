@@ -13,5 +13,6 @@ export const useFetchPongResultById = (id: number) => {
   return useQuery({
     queryKey: PongResultKeys.byId(id),
     queryFn: () => getPongResultById(id),
+    retry: 3,
   });
 };

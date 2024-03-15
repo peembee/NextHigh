@@ -13,5 +13,6 @@ export const useFetchEmpRankById = (id: number) => {
   return useQuery({
     queryKey: ProfileKeys.byId(id),
     queryFn: () => getEmpRankById(id),
+    retry: 3,
   });
 };

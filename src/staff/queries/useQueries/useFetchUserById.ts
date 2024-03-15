@@ -13,5 +13,6 @@ export const useFetchUserById = (id: number) => {
   return useQuery({
     queryKey: EmployeeKeys.byId(id),
     queryFn: () => getUserById(id),
+    retry: 3,
   });
 };
