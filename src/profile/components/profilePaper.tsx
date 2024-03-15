@@ -1,7 +1,5 @@
-import { Avatar, Divider, Grid, Typography } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 import { ProfileCard } from './profileCard';
-import imagePingPong from '../../assets/pingpong.jpg';
-import imageProgrammer from '../../assets/programmer.jpg';
 import dayjs from 'dayjs';
 import { PongResultResponse } from '../../services/API/response/pongResultResponse';
 import { useFetchQuiz } from '../queries/useQueries/useFetchQuiz';
@@ -119,13 +117,15 @@ export const ProfilePaper = (props: ProfileCardProps) => {
       </Grid>
 
       <Divider sx={{ bgcolor: 'black' }} />
-      <Typography
-        variant='caption'
-        color='text.secondary'
-        sx={{ justifyContent: 'left' }}
-      >
-        Active since {dayjs(memberSince).format('YYYY-MM-DD')}
-      </Typography>
+      {memberSince !== undefined && (
+        <Typography
+          variant='caption'
+          color='text.secondary'
+          sx={{ justifyContent: 'left' }}
+        >
+          Active since {dayjs(memberSince).format('YYYY-MM-DD')}
+        </Typography>
+      )}
     </>
   );
 };

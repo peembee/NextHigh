@@ -1,10 +1,8 @@
 import {
-  Box,
   Button,
   CircularProgress,
   Divider,
   Grid,
-  Paper,
   Typography,
   useMediaQuery,
   useTheme,
@@ -19,6 +17,8 @@ import { useCreateQuizResults } from '../queries/useMutations/useCreateQuizResul
 import { toast } from 'react-toastify';
 import { QuizResponse } from '../../services/API/response/quizResponse';
 import { AppContext } from '../../contexts/appContext';
+import { useQueryClient } from '@tanstack/react-query';
+import { EmployeeKeys } from '../queries/employeeKeys';
 
 type QuizzesProps = {
   userId: number;
@@ -27,12 +27,13 @@ type QuizzesProps = {
 export const Quizzes = (props: QuizzesProps) => {
   const { userId } = props;
   const [loading, setLoading] = useState(false);
-  const { fetchUpdatedUser } = useContext(AppContext);
+  const queryClient = useQueryClient();
   const [quiz, setQuiz] = useState<QuizResponse | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [correctAnswer, setCorrectAnswer] = useState<string | null>(null);
   const [timeoutId, setTimeoutId] = useState<number | null>(null);
+  const { fetchUpdatedUser } = useContext(AppContext);
 
   const green = 'linear-gradient(to top, #9be15d 0%, #00e3ae 100%)';
   const red = 'linear-gradient(to top, #ff0844 0%, #ffb199 100%)';
@@ -46,7 +47,8 @@ export const Quizzes = (props: QuizzesProps) => {
   if (!isXsScreen) {
     hoverStyles = {
       '&:hover': {
-        transform: 'scale(1.1)',
+        backgroundColor: '#090947',
+        backgroundImage: 'linear-gradient(315deg, #090947 0%, #5a585a 100%)',
       },
     };
   }
@@ -98,25 +100,23 @@ export const Quizzes = (props: QuizzesProps) => {
         }
 
         const newTimeoutId = setTimeout(() => {
+          queryClient.invalidateQueries({ queryKey: EmployeeKeys.all });
+          fetchUpdatedUser(userId);
           setSelectedAnswer(null);
           setIsCorrect(null);
           fetchNewQuiz();
           setCorrectAnswer(null);
+          setLoading(false);
           reset();
         }, 1500);
 
         if (timeoutId !== null) {
           clearTimeout(timeoutId);
         }
-
         setTimeoutId(newTimeoutId);
-
-        fetchUpdatedUser(userId);
       },
       onError: (error) => {
         toast.error('An error occurred. Please try again later.');
-      },
-      onSettled: () => {
         setLoading(false);
       },
     });
@@ -141,7 +141,7 @@ export const Quizzes = (props: QuizzesProps) => {
   return (
     <>
       {quiz !== null ? (
-        <Grid container>
+        <Grid container display={'flex'} justifyContent={'center'}>
           <Grid
             item
             xs={12}
@@ -149,7 +149,7 @@ export const Quizzes = (props: QuizzesProps) => {
             justifyContent={'center'}
             sx={{
               maxWidth: {
-                md: '100rem',
+                md: '75rem',
                 xs: '100%',
               },
             }}
@@ -157,197 +157,218 @@ export const Quizzes = (props: QuizzesProps) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <Grid container pl={5} pr={5} pb={5} pt={5}>
                 <>
-                  {!fetchQuiz.isFetching ? (
+                  <Grid item xs={12} display={'flex'} flexDirection={'column'}>
                     <Grid
                       item
                       xs={12}
                       display={'flex'}
-                      flexDirection={'column'}
+                      justifyContent={'space-between'}
+                      pb={1}
                     >
-                      <Grid
-                        item
-                        xs={12}
-                        display={'flex'}
-                        justifyContent={'space-between'}
-                        pb={1}
+                      <Typography
+                        sx={{ color: 'rgba(0, 0, 0, 0.50)' }}
+                        variant='body2'
                       >
-                        <Typography
-                          sx={{ color: 'rgba(0, 0, 0, 0.50)' }}
-                          variant='body2'
-                        >
-                          POINTS {quiz.points}
-                        </Typography>
-                        <Typography
-                          sx={{ color: 'rgba(0, 0, 0, 0.50)' }}
-                          variant='body2'
-                        >
-                          INCORRECT ANSWER -{quiz.points} POINTS
-                        </Typography>
-                      </Grid>
+                        POINTS {quiz.points}
+                      </Typography>
+                      <Typography
+                        sx={{ color: 'rgba(0, 0, 0, 0.50)' }}
+                        variant='body2'
+                      >
+                        INCORRECT ANSWER -{quiz.points} POINTS
+                      </Typography>
+                    </Grid>
 
-                      <Grid
-                        item
-                        xs={12}
-                        pb={2}
-                        display={'flex'}
-                        justifyContent={'center'}
-                      >
-                        <Grid display={'flex'} flexDirection={'column'} pb={1}>
-                          <Controller
-                            name='fK_QuizID'
-                            control={control}
-                            defaultValue={quiz.quizID}
-                            render={({ field }) => (
-                              <>
-                                <Typography variant='h5'>
-                                  {quiz.quizHeading}
-                                </Typography>
-                              </>
-                            )}
-                          />
-                        </Grid>
-                      </Grid>
-
-                      <Grid
-                        item
-                        xs={12}
-                        display={'flex'}
-                        justifyContent={'center'}
-                        mb={1}
-                        borderRadius={3}
-                        sx={{
-                          backgroundColor: '#090947',
-                          backgroundImage:
-                            'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
-                          ...hoverStyles,
-                        }}
-                      >
+                    <Grid
+                      item
+                      xs={12}
+                      pb={2}
+                      display={'flex'}
+                      justifyContent={'center'}
+                    >
+                      <Grid display={'flex'} flexDirection={'column'} pb={1}>
                         <Controller
-                          name='guessedAnswer'
+                          name='fK_QuizID'
                           control={control}
-                          defaultValue=''
+                          defaultValue={quiz.quizID}
                           render={({ field }) => (
-                            <Button
-                              disabled={loading}
-                              size='large'
-                              disableRipple
-                              sx={{
-                                borderRadius: '10px',
-                                fontWeight: 'bold',
-                                color: 'white',
-                                textTransform: 'none',
-                                fontSize: '18px',
-                              }}
-                              fullWidth
-                              type='submit'
-                              onClick={() => {
-                                setSelectedAnswer(quiz.altOne);
-                                field.onChange(quiz.altOne);
-                              }}
-                              style={{
-                                background: handleColors(quiz.altOne),
-                              }}
-                            >
-                              {quiz.altOne}
-                            </Button>
-                          )}
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        xs={12}
-                        display={'flex'}
-                        justifyContent={'center'}
-                        mb={1}
-                        borderRadius={3}
-                        sx={{
-                          backgroundColor: '#090947',
-                          backgroundImage:
-                            'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
-                          ...hoverStyles,
-                        }}
-                      >
-                        <Controller
-                          name='guessedAnswer'
-                          control={control}
-                          defaultValue=''
-                          render={({ field }) => (
-                            <Button
-                              disabled={loading}
-                              size='large'
-                              disableRipple
-                              sx={{
-                                borderRadius: '10px',
-                                fontWeight: 'bold',
-                                color: 'white',
-                                textTransform: 'none',
-                                fontSize: '18px',
-                              }}
-                              fullWidth
-                              type='submit'
-                              onClick={() => {
-                                setSelectedAnswer(quiz.altTwo);
-                                field.onChange(quiz.altTwo);
-                              }}
-                              style={{
-                                background: handleColors(quiz.altTwo),
-                              }}
-                            >
-                              {quiz.altTwo}
-                            </Button>
-                          )}
-                        />
-                      </Grid>
-
-                      <Grid
-                        item
-                        xs={12}
-                        display={'flex'}
-                        justifyContent={'center'}
-                        mb={1}
-                        borderRadius={3}
-                        sx={{
-                          backgroundColor: '#090947',
-                          backgroundImage:
-                            'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
-                          ...hoverStyles,
-                        }}
-                      >
-                        <Controller
-                          name='guessedAnswer'
-                          control={control}
-                          defaultValue=''
-                          render={({ field }) => (
-                            <Button
-                              disabled={loading}
-                              size='large'
-                              disableRipple
-                              sx={{
-                                borderRadius: '10px',
-                                fontWeight: 'bold',
-                                color: 'white',
-                                textTransform: 'none',
-                                fontSize: '18px',
-                              }}
-                              fullWidth
-                              type='submit'
-                              onClick={() => {
-                                setSelectedAnswer(quiz.altThree);
-                                field.onChange(quiz.altThree);
-                              }}
-                              style={{
-                                background: handleColors(quiz.altThree),
-                              }}
-                            >
-                              {quiz.altThree}
-                            </Button>
+                            <>
+                              <Typography variant='h5'>
+                                {quiz.quizHeading}
+                              </Typography>
+                            </>
                           )}
                         />
                       </Grid>
                     </Grid>
-                  ) : (
-                    <CircularProgress color='primary' />
-                  )}
+
+                    <Grid
+                      item
+                      xs={12}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      mb={1}
+                      borderRadius={3}
+                      sx={{
+                        backgroundColor: '#090947',
+                        backgroundImage:
+                          'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
+                        transition: '0.3s',
+                        ...hoverStyles,
+                      }}
+                    >
+                      <Controller
+                        name='guessedAnswer'
+                        control={control}
+                        defaultValue=''
+                        render={({ field }) => (
+                          <Button
+                            disabled={loading}
+                            size='large'
+                            disableRipple
+                            sx={{
+                              borderRadius: '10px',
+                              fontWeight: 'bold',
+                              color: 'white',
+                              textTransform: 'none',
+                              fontSize: '18px',
+                              '&:disabled': {
+                                color: 'white',
+                              },
+                            }}
+                            fullWidth
+                            type='submit'
+                            onClick={() => {
+                              setSelectedAnswer(quiz.altOne);
+                              field.onChange(quiz.altOne);
+                            }}
+                            style={{
+                              background: handleColors(quiz.altOne),
+                            }}
+                          >
+                            {quiz.altOne}
+                          </Button>
+                        )}
+                      />
+                    </Grid>
+
+                    {fetchQuiz.isFetching && (
+                      <Grid
+                        sx={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <CircularProgress
+                          color='primary'
+                          sx={{
+                            scale: '1.9',
+                            position: 'absolute',
+                          }}
+                        />
+                      </Grid>
+                    )}
+
+                    <Grid
+                      item
+                      xs={12}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      mb={1}
+                      borderRadius={3}
+                      sx={{
+                        backgroundColor: '#090947',
+                        backgroundImage:
+                          'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
+                        transition: '0.3s',
+                        ...hoverStyles,
+                      }}
+                    >
+                      <Controller
+                        name='guessedAnswer'
+                        control={control}
+                        defaultValue=''
+                        render={({ field }) => (
+                          <Button
+                            disabled={loading}
+                            size='large'
+                            disableRipple
+                            sx={{
+                              borderRadius: '10px',
+                              fontWeight: 'bold',
+                              color: 'white',
+                              textTransform: 'none',
+                              fontSize: '18px',
+                              '&:disabled': {
+                                color: 'white',
+                              },
+                            }}
+                            fullWidth
+                            type='submit'
+                            onClick={() => {
+                              setSelectedAnswer(quiz.altTwo);
+                              field.onChange(quiz.altTwo);
+                            }}
+                            style={{
+                              background: handleColors(quiz.altTwo),
+                            }}
+                          >
+                            {quiz.altTwo}
+                          </Button>
+                        )}
+                      />
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      mb={1}
+                      borderRadius={3}
+                      sx={{
+                        backgroundColor: '#090947',
+                        backgroundImage:
+                          'linear-gradient(315deg, #090947 0%, #5a585a 74%)',
+                        transition: '0.3s',
+                        ...hoverStyles,
+                      }}
+                    >
+                      <Controller
+                        name='guessedAnswer'
+                        control={control}
+                        defaultValue=''
+                        render={({ field }) => (
+                          <Button
+                            disabled={loading}
+                            size='large'
+                            disableRipple
+                            sx={{
+                              borderRadius: '10px',
+                              fontWeight: 'bold',
+                              color: 'white',
+                              textTransform: 'none',
+                              fontSize: '18px',
+                              '&:disabled': {
+                                color: 'white',
+                              },
+                            }}
+                            fullWidth
+                            type='submit'
+                            onClick={() => {
+                              setSelectedAnswer(quiz.altThree);
+                              field.onChange(quiz.altThree);
+                            }}
+                            style={{
+                              background: handleColors(quiz.altThree),
+                            }}
+                          >
+                            {quiz.altThree}
+                          </Button>
+                        )}
+                      />
+                    </Grid>
+                  </Grid>
                 </>
               </Grid>
             </form>
