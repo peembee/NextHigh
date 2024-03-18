@@ -73,9 +73,9 @@ export const DisplayAllPongRanks = () => {
             fetchAllUsers.data
               .sort((a, b) => b.pongVictories - a.pongVictories) // Sortera i fallande ordning baserat på empPoints
               .slice(0, 3) // Hämta de tre första elementen
-              .map((user: EmployeeResponse) => (
+              .map((user: EmployeeResponse, index) => (
                 <Grid item key={user.personID}>
-                  <UserDataPongFetcher user={user} />
+                  <UserDataPongFetcher user={user} highScorePlace={index + 1} />
                 </Grid>
               ))
           ) : (

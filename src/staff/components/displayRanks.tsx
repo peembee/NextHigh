@@ -73,9 +73,9 @@ export const DisplayRanks = () => {
             fetchAllUsers.data
               .sort((a, b) => b.empPoints - a.empPoints) // Sortera i fallande ordning baserat på empPoints
               .slice(0, 3) // Hämta de tre första elementen
-              .map((user: EmployeeResponse) => (
+              .map((user: EmployeeResponse, index) => (
                 <Grid item key={user.personID}>
-                  <UserDataFetcher user={user} />
+                  <UserDataFetcher user={user} highScorePlace={index + 1} />
                 </Grid>
               ))
           ) : (

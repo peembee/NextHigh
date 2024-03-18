@@ -32,7 +32,6 @@ type ProfileProps = {
 
 export const Profile = (props: ProfileProps) => {
   const { setModalOpen, modalOpen, user } = props;
-
   const fetchEmpRank = useFetchEmpRankById(user?.personID);
   const fetchPongRank = useFetchPongRankById(user?.personID);
   const fetchPongResult = useFetchPongResultById(user?.personID);
@@ -57,7 +56,7 @@ export const Profile = (props: ProfileProps) => {
             }}
             id='customized-dialog-title'
           >
-            STATS
+            Profile
           </DialogTitle>
           <IconButton
             aria-label='close'
@@ -78,6 +77,7 @@ export const Profile = (props: ProfileProps) => {
               rankPongTitle={fetchPongRank.data.rankTitle}
               pongResults={fetchPongResult.data ?? []}
               quizResults={fetchQuizResult.data ?? []}
+              imageURL={user.imageURL || ''}
             />
           </DialogContent>
         </BootstrapDialog>
