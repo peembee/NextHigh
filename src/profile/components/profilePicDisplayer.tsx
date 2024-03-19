@@ -1,6 +1,5 @@
 import {
   Avatar,
-  Box,
   CircularProgress,
   Divider,
   Grid,
@@ -13,17 +12,23 @@ import { ProfilePics } from './profilePicsUrl';
 import { useUpdateUser } from '../../staff/queries/useQueries/useUpdateUser';
 import { EmployeeRequest } from '../../services/API/request/employeeRequest';
 import { EmployeeResponse } from '../../services/API/response/employeeResponse';
-import { toast } from 'react-toastify';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../contexts/appContext';
 
-type ProfileCardsDisplayerProps = {
+type ProfilePicDisplayerProps = {
   setOpenProfilePicModal: (closeProfilePicModal: boolean) => void;
   user: EmployeeResponse;
+  setUpdatedPicture: (updatedPicture: boolean) => void;
+  setUpdatedPictureMessage: (updatedPictureMessage: string) => void;
 };
 
-export const ProfileCardsDisplayer = (props: ProfileCardsDisplayerProps) => {
-  const { setOpenProfilePicModal, user } = props;
+export const ProfilePicDisplayer = (props: ProfilePicDisplayerProps) => {
+  const {
+    setOpenProfilePicModal,
+    user,
+    setUpdatedPicture,
+    setUpdatedPictureMessage,
+  } = props;
   const [loading, setIsLoading] = useState<boolean>(false);
   const { fetchUpdatedUser } = useContext(AppContext);
 
@@ -40,7 +45,6 @@ export const ProfileCardsDisplayer = (props: ProfileCardsDisplayerProps) => {
       username: user.username,
       imageURL: imageUrl,
     };
-    console.log(postData);
 
     updateUser.mutate(postData, {
       onSuccess: () => {
@@ -48,10 +52,12 @@ export const ProfileCardsDisplayer = (props: ProfileCardsDisplayerProps) => {
         if (user.personID) {
           fetchUpdatedUser(user.personID);
         }
-        toast.success('Account updated');
+        setUpdatedPicture(true);
+        setUpdatedPictureMessage('Updated');
       },
       onError: (error) => {
-        toast.error('An error occurred. Please try again later.');
+        setUpdatedPicture(true);
+        setUpdatedPictureMessage('An error occurred. Please try again later.');
       },
       onSettled: () => {
         setIsLoading(false);
@@ -63,48 +69,49 @@ export const ProfileCardsDisplayer = (props: ProfileCardsDisplayerProps) => {
     <Paper
       elevation={3}
       sx={{
-        padding: '20px',
-        maxHeight: '5px',
+        paddingLeft: '20px',
+        paddingRight: '20px',
         overflowY: 'auto',
       }}
     >
-      <Grid container direction='column' spacing={2}>
-        <Grid container>
-          <Grid
-            container
-            alignItems='center'
-            justifyContent='space-between'
-            position={'fixed'}
-          >
-            <Grid item xs={4}>
-              <Typography variant='h6' color='grey'>
-                Select Profile Pic
-              </Typography>
-            </Grid>
-            <Grid item xs={8}>
-              <IconButton
-                aria-label='close'
-                onClick={() => setOpenProfilePicModal(false)}
-                sx={{
-                  color: (theme) => theme.palette.grey[500],
-                  position: 'fixed',
-                }}
-              >
-                <CloseIcon />
-              </IconButton>
-            </Grid>
+      <Grid container>
+        <Grid
+          container
+          alignItems='center'
+          justifyContent='space-between'
+          position={'sticky'}
+          top={0}
+          bgcolor='white'
+          zIndex={1000}
+        >
+          <Grid item xs={6}>
+            <Typography variant='h5' color='grey' ml={1}>
+              Select Profile Pic
+            </Typography>
           </Grid>
-          <Divider sx={{ margin: '8px 0', backgroundColor: 'grey' }} />
+          <Grid item xs={6} textAlign='right'>
+            <IconButton
+              aria-label='close'
+              onClick={() => {
+                setUpdatedPicture(false);
+                setOpenProfilePicModal(false);
+              }}
+              sx={{
+                color: (theme) => theme.palette.grey[500],
+              }}
+            >
+              <CloseIcon sx={{ scale: '1.5' }} />
+            </IconButton>
+          </Grid>
+          <Grid item xs={12}>
+            <Divider
+              sx={{ margin: '2px', backgroundColor: 'grey', height: '1px' }}
+            />
+          </Grid>
         </Grid>
 
         <Grid item>
-          <Grid
-            container
-            spacing={2}
-            pb={5}
-            justifyContent='center'
-            alignItems='center'
-          >
+          <Grid container pb={5} justifyContent='center' alignItems='center'>
             <Grid
               item
               sx={{

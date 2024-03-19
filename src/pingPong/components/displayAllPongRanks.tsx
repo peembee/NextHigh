@@ -71,8 +71,8 @@ export const DisplayAllPongRanks = () => {
         >
           {fetchAllUsers.data && fetchAllUsers.data.length > 0 ? (
             fetchAllUsers.data
-              .sort((a, b) => b.pongVictories - a.pongVictories) // Sortera i fallande ordning baserat på empPoints
-              .slice(0, 3) // Hämta de tre första elementen
+              .sort((a, b) => b.pongVictories - a.pongVictories)
+              .slice(0, 3)
               .map((user: EmployeeResponse, index) => (
                 <Grid item key={user.personID}>
                   <UserDataPongFetcher user={user} highScorePlace={index + 1} />
@@ -163,10 +163,12 @@ export const DisplayAllPongRanks = () => {
                                   currentPage * cardsPerPage + cardsPerPage
                                 )
                                 .map((card: EmployeeResponse) => (
-                                  <UserDataPongFetcher
-                                    key={card.personID}
-                                    user={card}
-                                  />
+                                  <Box key={card.personID} pl={1} pr={1}>
+                                    <UserDataPongFetcher
+                                      key={card.personID}
+                                      user={card}
+                                    />
+                                  </Box>
                                 ))}
                             </Stack>
                           </Slide>

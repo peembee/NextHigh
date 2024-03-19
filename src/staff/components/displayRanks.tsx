@@ -71,8 +71,8 @@ export const DisplayRanks = () => {
         >
           {fetchAllUsers.data && fetchAllUsers.data.length > 0 ? (
             fetchAllUsers.data
-              .sort((a, b) => b.empPoints - a.empPoints) // Sortera i fallande ordning baserat på empPoints
-              .slice(0, 3) // Hämta de tre första elementen
+              .sort((a, b) => b.empPoints - a.empPoints)
+              .slice(0, 3)
               .map((user: EmployeeResponse, index) => (
                 <Grid item key={user.personID}>
                   <UserDataFetcher user={user} highScorePlace={index + 1} />
@@ -163,10 +163,12 @@ export const DisplayRanks = () => {
                                   currentPage * cardsPerPage + cardsPerPage
                                 )
                                 .map((card: EmployeeResponse) => (
-                                  <UserDataFetcher
-                                    key={card.personID}
-                                    user={card}
-                                  />
+                                  <Box key={card.personID} pl={1} pr={1}>
+                                    <UserDataFetcher
+                                      key={card.personID}
+                                      user={card}
+                                    />
+                                  </Box>
                                 ))}
                             </Stack>
                           </Slide>

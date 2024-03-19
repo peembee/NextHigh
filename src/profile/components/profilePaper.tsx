@@ -4,7 +4,6 @@ import {
   Divider,
   Grid,
   IconButton,
-  Paper,
   Tooltip,
   Typography,
 } from '@mui/material';
@@ -18,7 +17,7 @@ import { AppContext } from '../../contexts/appContext';
 import { StatsDetailDropdown } from './statsDetailDropdown';
 import EditIcon from '@mui/icons-material/Edit';
 import { grey } from '@mui/material/colors';
-import { ProfileCardsDisplayer } from './profileCardsDisplayer';
+import { ProfilePicDisplayer } from './profilePicDisplayer';
 
 type ProfileCardProps = {
   memberSince: string | undefined;
@@ -40,11 +39,10 @@ export const ProfilePaper = (props: ProfileCardProps) => {
   } = props;
 
   const { user } = useContext(AppContext);
-  const [totalWins, setTotalWins] = useState(0);
   const [openProfilePicModal, setOpenProfilePicModal] =
     useState<boolean>(false);
-
-  console.log('openProfilePicModal', openProfilePicModal);
+  const [updatedPicture, setUpdatedPicture] = useState<Boolean>(false);
+  const [updatedPictureMessage, setUpdatedPictureMessage] = useState<string>();
 
   const fetchAllQuizzes = useFetchQuiz();
 
@@ -76,6 +74,16 @@ export const ProfilePaper = (props: ProfileCardProps) => {
     }
   };
 
+  useEffect(() => {
+    let timer;
+    if (updatedPicture) {
+      timer = setTimeout(() => {
+        setUpdatedPicture(false);
+      }, 4000);
+    }
+    return () => clearTimeout(timer);
+  }, [updatedPicture]);
+
   return (
     <>
       {user !== null && (
@@ -94,37 +102,65 @@ export const ProfilePaper = (props: ProfileCardProps) => {
         >
           <Grid item xs={12}>
             <Grid container spacing={5} justifyContent='center'>
-              <Grid item>
+              <Grid item xs={3} sx={{ paddingBottom: '1rem' }}>
                 <Box
                   sx={{
                     display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'flex-end',
-                    position: 'relative',
-                    marginRight: { xs: '-80px', md: '100px' },
+                    flexDirection: 'row',
+                    alignItems: 'flex-start',
+                    position: 'sticky',
+                    marginRight: { xs: '-100px', md: '5rem' },
+                    top: 0,
+                    zIndex: 1000,
                   }}
                 >
                   <Avatar
                     alt='Profile Pic'
                     src={imageURL}
                     sx={{
+                      // backgroundImage:
+                      //   'linear-gradient(45deg, #ff00ff, #00ffff)',
+                      // padding: '4px',
+                      // borderRadius: '4px',
+                      // boxShadow: '0px 0px 15px 3px black',
                       scale: '5.0',
                       marginBottom: { xs: '80px' },
                       marginTop: '80px',
-                      marginRight: '80px',
+                      marginRight: '800px',
                     }}
                   />
+
                   <Tooltip title='Change Profile Pic' placement='right'>
                     <Box
                       sx={{
                         position: 'absolute',
                         color: grey[500],
-                        right: '-10px',
+                        left: '6rem',
                       }}
                     >
-                      <IconButton onClick={() => setOpenProfilePicModal(true)}>
+                      <IconButton
+                        onClick={() => {
+                          setUpdatedPicture(false);
+                          setOpenProfilePicModal(!openProfilePicModal);
+                        }}
+                      >
                         <EditIcon />
                       </IconButton>
+                      {updatedPicture && (
+                        <Typography
+                          sx={{
+                            marginLeft: '2rem',
+                            marginTop: '2.5rem',
+                            display: 'inline-block',
+                            backgroundColor: 'rgba(0, 255, 0, 0.1)',
+                            color: 'rgba(0, 0, 0, 0.6)',
+                            padding: '8px',
+                            borderRadius: '4px',
+                          }}
+                        >
+                          {updatedPictureMessage}
+                        </Typography>
+                      )}
                     </Box>
                   </Tooltip>
                 </Box>
@@ -132,28 +168,48 @@ export const ProfilePaper = (props: ProfileCardProps) => {
 
               {!openProfilePicModal ? (
                 <>
-                  <Grid item>
-                    <ProfileCard
-                      image='https://i.ibb.co/BnGByPB/pingpong.jpg'
-                      alt='PingPong Logo'
-                      header='Rank'
-                      rankTitle={rankPongTitle}
-                      imageTitle={'Victory ' + marginVictory() + '%'}
-                      points={user?.pongVictories.toString()}
-                    />
+                  <Grid item xs={12} md={3}>
+                    <Box
+                      sx={{
+                        backgroundImage:
+                          'linear-gradient(45deg, #ff00ff, #00ffff)',
+                        padding: '4px',
+                        borderRadius: '4px',
+                        boxShadow: '0px 0px 15px 3px black',
+                      }}
+                    >
+                      <ProfileCard
+                        image='https://i.ibb.co/BnGByPB/pingpong.jpg'
+                        alt='PingPong Logo'
+                        header='Rank'
+                        rankTitle={rankPongTitle}
+                        imageTitle={'Victory ' + marginVictory() + '%'}
+                        points={user?.pongVictories.toString()}
+                      />
+                    </Box>
                   </Grid>
 
-                  <Grid item>
-                    <ProfileCard
-                      image='https://i.ibb.co/x1SjHM3/programmer.jpg'
-                      header='Rank'
-                      alt='Programmer Logo'
-                      rankTitle={rankEmpTitle}
-                      imageTitle={'Quiz ' + marginQuiz() + '%'}
-                      points={`Points ${
-                        user?.empPoints.toString() ?? 'Unknown'
-                      }`}
-                    />
+                  <Grid item xs={12} md={3}>
+                    <Box
+                      sx={{
+                        backgroundImage:
+                          'linear-gradient(45deg, #ff00ff, #00ffff)',
+                        padding: '4px',
+                        borderRadius: '4px',
+                        boxShadow: '0px 0px 15px 3px black',
+                      }}
+                    >
+                      <ProfileCard
+                        image='https://i.ibb.co/x1SjHM3/programmer.jpg'
+                        header='Rank'
+                        alt='Programmer Logo'
+                        rankTitle={rankEmpTitle}
+                        imageTitle={'Quiz ' + marginQuiz() + '%'}
+                        points={`Points ${
+                          user?.empPoints.toString() ?? 'Unknown'
+                        }`}
+                      />
+                    </Box>
                   </Grid>
                 </>
               ) : (
@@ -166,7 +222,9 @@ export const ProfilePaper = (props: ProfileCardProps) => {
                     overflowY: 'auto',
                   }}
                 >
-                  <ProfileCardsDisplayer
+                  <ProfilePicDisplayer
+                    setUpdatedPicture={setUpdatedPicture}
+                    setUpdatedPictureMessage={setUpdatedPictureMessage}
                     setOpenProfilePicModal={setOpenProfilePicModal}
                     user={user}
                   />

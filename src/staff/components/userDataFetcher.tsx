@@ -34,13 +34,13 @@ export const UserDataFetcher = (props: UserDataFetcherProps) => {
   };
   const setTopRankBorder = () => {
     if (highScorePlace === 1) {
-      return 'linear-gradient(45deg, rgba(255, 255, 0, 0.7), rgba(255, 0, 0, 0.7))'; // Guldgradient med 70% opacitet
+      return 'linear-gradient(45deg, rgba(255, 255, 0, 0.7), rgba(255, 0, 0, 0.7))';
     } else if (highScorePlace === 2) {
-      return 'linear-gradient(45deg, #cccccc, #999999)'; // Silvergradient med 70% opacitet
+      return 'linear-gradient(45deg, #cccccc, #999999)';
     } else if (highScorePlace === 3) {
-      return 'linear-gradient(45deg, rgba(205, 127, 50, 0.7), rgba(139, 69, 19, 0.7))'; // Bronsgradient med 70% opacitet
+      return 'linear-gradient(45deg, rgba(205, 127, 50, 0.7), rgba(139, 69, 19, 0.7))';
     } else {
-      return 'linear-gradient(45deg, #ff00ff, #00ffff)'; // Ingen ram för andra platser
+      return 'linear-gradient(45deg, #ff00ff, #00ffff)';
     }
   };
 
@@ -51,9 +51,9 @@ export const UserDataFetcher = (props: UserDataFetcherProps) => {
           <Box
             sx={{
               backgroundImage: setTopRankBorder(),
-              padding: '4px', // Justera ramens tjocklek här
-              borderRadius: '4px', // Justera ramens rundning här
-              boxShadow: '0px 0px 15px 3px black', // Lägg till en drop-shadow för att få en mer framträdande kant
+              padding: '4px',
+              borderRadius: '4px',
+              boxShadow: '0px 0px 15px 3px black',
             }}
           >
             <ProfileCard

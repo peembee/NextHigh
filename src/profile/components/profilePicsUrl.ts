@@ -7,13 +7,13 @@ export const ProfilePics = [
   },
   {
     id: 3,
-    url: 'https://i.ibb.co/BrzdfXF/Manet-Double-Eye.jpg',
-    alt: 'Manet-Double-Eye',
+    url: 'https://i.ibb.co/S7QdNHr/Cigarett-Moose.jpg',
+    alt: 'Cigarett-Moose',
   },
   {
     id: 4,
-    url: 'https://i.ibb.co/vJPsPDk/Manet-Single-Eye.jpg',
-    alt: 'Manet-Single-Eye',
+    url: 'https://i.ibb.co/rwjpZRD/Broccoli-Head-Frog.jpg ',
+    alt: 'Broccoli-Head-Frog',
   },
   {
     id: 5,
@@ -28,8 +28,8 @@ export const ProfilePics = [
   { id: 7, url: 'https://i.ibb.co/YZ2zwLz/Dog-Man.jpg', alt: 'Dog-Man' },
   {
     id: 8,
-    url: 'https://i.ibb.co/T0c3SND/Monkey-With-glasses.jpg',
-    alt: 'Monkey-With-glasses',
+    url: 'https://i.ibb.co/nPfGN6G/Package-of-moose-cigaretts.jpg',
+    alt: 'Package-of-moose-cigaretts',
   },
   {
     id: 9,
@@ -46,8 +46,8 @@ export const ProfilePics = [
   { id: 13, url: 'https://i.ibb.co/9qYtYgt/Many-faces.jpg', alt: 'Many-faces' },
   {
     id: 14,
-    url: 'https://i.ibb.co/300js7B/Space-Horse.jpg',
-    alt: 'Space-Horse',
+    url: 'https://i.ibb.co/VQtsm6s/Confused-Ping-Pong-Bear.jpg',
+    alt: 'Confused-Ping-Pong-Bear ',
   },
   { id: 15, url: 'https://i.ibb.co/3fY0xw0/Cowoman.jpg', alt: 'Cowoman' },
   {
@@ -59,5 +59,25 @@ export const ProfilePics = [
     id: 17,
     url: 'https://i.ibb.co/9wzKQ9N/Robot-Horse.jpg',
     alt: 'Robot-Horse',
+  },
+  {
+    id: 18,
+    url: 'https://i.ibb.co/vJPsPDk/Manet-Single-Eye.jpg',
+    alt: 'Manet-Single-Eye',
+  },
+  {
+    id: 19,
+    url: 'https://i.ibb.co/BrzdfXF/Manet-Double-Eye.jpg',
+    alt: 'Manet-Double-Eye',
+  },
+  {
+    id: 20,
+    url: 'https://i.ibb.co/T0c3SND/Monkey-With-glasses.jpg',
+    alt: 'Monkey-With-glasses',
+  },
+  {
+    id: 21,
+    url: 'https://i.ibb.co/300js7B/Space-Horse.jpg',
+    alt: 'Space-Horse',
   },
 ];
