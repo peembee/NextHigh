@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { QuizResultKeys } from '../quizResultKeys';
 import { QuizResultRequest } from '../../../services/API/request/quizResultRequest';
 import axios from 'axios';
+import { QuizResultKeys } from '../../../profile/queries/quizResultKeys';
 
 const createQuizResultApi = 'https://localhost:7062/api/QuizResult';
 

@@ -24,12 +24,12 @@ export const ProfileCard = (props: ProfileCardProps) => {
     <Grid item>
       <Card
         sx={{
-          Width: 300,
+          Width: 200,
           transition: 'transform 0.3s',
           '&:hover': { transform: 'scale(1.1)' },
         }}
       >
-        <CardMedia component='img' height='300' image={image} alt={alt} />
+        <CardMedia component='img' height='250' image={image} alt={alt} />
         <CardContent
           sx={{
             backgroundColor: '#090947',

@@ -25,7 +25,7 @@ export const pages = [
   { id: 3, pageName: 'Staff', url: '/staff', toolTip: 'Meet our Staff' },
 ];
 const settings = [
-  { id: 1, settingName: 'Stats' },
+  { id: 1, settingName: 'Profile' },
   { id: 2, settingName: 'Account' },
   { id: 3, settingName: 'Logout' },
 ];
@@ -270,10 +270,7 @@ export function Navbar(props: NavbarProps) {
               <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title='Open settings' placement='left'>
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar
-                      alt='Standard Profile Pic'
-                      src='https://i.ibb.co/0cRjfdV/robotpong.jpg'
-                    />
+                    <Avatar alt='Standard Profile Pic' src={user.imageURL} />
                   </IconButton>
                 </Tooltip>
                 <Menu

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { QuizResultKeys } from '../quizResultKeys';
+import { QuizResultKeys } from '../../../profile/queries/quizResultKeys';
 
 const getQuizResultApi = 'https://localhost:7062/api/QuizResult';
 

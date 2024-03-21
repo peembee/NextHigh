@@ -96,10 +96,44 @@ export const QuizzesDropdown = (props: QuizzesDropdownProps) => {
                   }}
                 >
                   <TableCell align='left'>{item.username}</TableCell>
-                  <TableCell align='left'>{item.quizHeading}</TableCell>
-                  <TableCell align='left'>{item.points}</TableCell>
-                  <TableCell align='left'>{item.guessedAnswer}</TableCell>
-                  <TableCell align='left'>{item.isCorrect}</TableCell>
+                  <TableCell
+                    sx={{
+                      color:
+                        item.isCorrect === 'Incorrect answer' ? 'red' : 'green',
+                    }}
+                    align='left'
+                  >
+                    {item.quizHeading}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color:
+                        item.isCorrect === 'Incorrect answer' ? 'red' : 'green',
+                    }}
+                    align='left'
+                  >
+                    {item.isCorrect === 'Incorrect answer'
+                      ? `-${item.points}`
+                      : `${item.points}`}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color:
+                        item.isCorrect === 'Incorrect answer' ? 'red' : 'green',
+                    }}
+                    align='left'
+                  >
+                    {item.guessedAnswer}
+                  </TableCell>
+                  <TableCell
+                    sx={{
+                      color:
+                        item.isCorrect === 'Incorrect answer' ? 'red' : 'green',
+                    }}
+                    align='left'
+                  >
+                    {item.isCorrect}
+                  </TableCell>
                   <TableCell align='left'>
                     {dayjs(item.quizDate).format('dddd, MMMM DD, YYYY')}
                   </TableCell>

@@ -98,7 +98,6 @@ export const Quizzes = (props: QuizzesProps) => {
         } else {
           setIsCorrect(false);
         }
-
         const newTimeoutId = setTimeout(() => {
           queryClient.invalidateQueries({ queryKey: EmployeeKeys.all });
           fetchUpdatedUser(userId);
