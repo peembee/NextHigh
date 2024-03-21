@@ -24,7 +24,7 @@ export const ProfileCard = (props: ProfileCardProps) => {
     <Grid item>
       <Card
         sx={{
-          Width: 250,
+          Width: 200,
           transition: 'transform 0.3s',
           '&:hover': { transform: 'scale(1.1)' },
         }}

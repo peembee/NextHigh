@@ -22,7 +22,6 @@ export const UserDataFetcher = (props: UserDataFetcherProps) => {
       return 0;
     }
     const totalQuizzes = fetchAllQuizzes.data.length;
-
     const correctAnswers = fetchQuizResult.data.filter(
       (myQuiz) => myQuiz.isCorrect === 'Correct answer'
     );
@@ -32,6 +31,7 @@ export const UserDataFetcher = (props: UserDataFetcherProps) => {
     const correctPercentage = (totalCorrect / totalQuizzes) * 100;
     return correctPercentage.toFixed(1);
   };
+
   const setTopRankBorder = () => {
     if (highScorePlace === 1) {
       return 'linear-gradient(45deg, rgba(255, 255, 0, 0.7), rgba(255, 0, 0, 0.7))';
@@ -63,9 +63,7 @@ export const UserDataFetcher = (props: UserDataFetcherProps) => {
               rankTitle={
                 fetchEmpRank.data ? fetchEmpRank.data.rankTitle : 'UnRanked'
               }
-              imageTitle={`Quiz ${
-                fetchQuizResult.data ? marginQuiz() + '%' : '0%'
-              }`}
+              imageTitle={'Quiz ' + marginQuiz() + '%'}
               points={`Points ${user.empPoints.toString() ?? '0'}`}
               username={user.username}
             />

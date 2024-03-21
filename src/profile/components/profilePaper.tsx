@@ -118,11 +118,6 @@ export const ProfilePaper = (props: ProfileCardProps) => {
                     alt='Profile Pic'
                     src={imageURL}
                     sx={{
-                      // backgroundImage:
-                      //   'linear-gradient(45deg, #ff00ff, #00ffff)',
-                      // padding: '4px',
-                      // borderRadius: '4px',
-                      // boxShadow: '0px 0px 15px 3px black',
                       scale: '5.0',
                       marginBottom: { xs: '80px' },
                       marginTop: '80px',
@@ -138,19 +133,21 @@ export const ProfilePaper = (props: ProfileCardProps) => {
                         left: '6rem',
                       }}
                     >
-                      <IconButton
-                        onClick={() => {
-                          setUpdatedPicture(false);
-                          setOpenProfilePicModal(!openProfilePicModal);
-                        }}
-                      >
-                        <EditIcon />
-                      </IconButton>
+                      {!updatedPicture && (
+                        <IconButton
+                          onClick={() => {
+                            setUpdatedPicture(false);
+                            setOpenProfilePicModal(!openProfilePicModal);
+                          }}
+                        >
+                          <EditIcon />
+                        </IconButton>
+                      )}
                       {updatedPicture && (
                         <Typography
                           sx={{
-                            marginLeft: '2rem',
-                            marginTop: '2.5rem',
+                            marginLeft: '0rem',
+                            marginTop: '0rem',
                             display: 'inline-block',
                             backgroundColor: 'rgba(0, 255, 0, 0.1)',
                             color: 'rgba(0, 0, 0, 0.6)',

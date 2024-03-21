@@ -55,7 +55,7 @@ export const UserDataPongFetcher = (props: UserDataPongFetcher) => {
               header='Rank'
               rankTitle={pongRank.data ? pongRank.data.rankTitle : 'UnRanked'}
               imageTitle={'Victory ' + marginVictory() + '%'}
-              points={user.pongVictories.toString()}
+              points={`Victories ${user.pongVictories.toString()}`}
               username={user.username}
             />
           </Box>

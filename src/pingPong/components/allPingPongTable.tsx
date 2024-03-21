@@ -65,15 +65,16 @@ export const AllPingPongTable = () => {
                   }}
                 >
                   <TableRow sx={{ maxHeight: '40px', overflowY: 'auto' }}>
+                    <TableCell sx={{ fontWeight: 'bold', color: 'whitesmoke' }}>
+                      User
+                    </TableCell>
                     <TableCell
                       sx={{ fontWeight: 'bold', color: 'whitesmoke' }}
                       align='left'
                     >
                       Outcome
                     </TableCell>
-                    <TableCell sx={{ fontWeight: 'bold', color: 'whitesmoke' }}>
-                      User
-                    </TableCell>
+
                     <TableCell
                       sx={{ fontWeight: 'bold', color: 'whitesmoke' }}
                       align='left'
@@ -125,7 +126,7 @@ export const AllPingPongTable = () => {
                           }}
                           align='left'
                         >
-                          {item.wonMatch}
+                          {item.username}
                         </TableCell>
                         <TableCell
                           sx={{
@@ -133,8 +134,9 @@ export const AllPingPongTable = () => {
                           }}
                           align='left'
                         >
-                          {item.username}
+                          {item.wonMatch}
                         </TableCell>
+
                         <TableCell
                           sx={{
                             color: item.wonMatch === 'Defeat' ? 'red' : 'green',

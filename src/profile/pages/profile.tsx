@@ -44,7 +44,10 @@ export const Profile = (props: ProfileProps) => {
           onClose={() => setModalOpen(false)}
           aria-labelledby='customized-dialog-title'
           open={modalOpen}
-          sx={{ maxHeight: '100%' }}
+          sx={{
+            maxHeight: '100%',
+            maxWidth: '100%',
+          }}
         >
           <DialogTitle
             sx={{

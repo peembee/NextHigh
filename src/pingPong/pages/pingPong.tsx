@@ -8,7 +8,6 @@ import {
 } from '@mui/material';
 import { AddPingPongGame } from '../components/addPingPongGame';
 import { DisplayAllPongRanks } from '../components/displayAllPongRanks';
-import { AllQuizzesTable } from '../../staff/components/allQuizzesTable';
 import { useState } from 'react';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AllPingPongTable } from '../components/allPingPongTable';

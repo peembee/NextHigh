@@ -86,10 +86,16 @@ export const AddPingPongGame = () => {
               minWidth: 500,
               height: 400,
             },
+            paddingBottom: { xs: '6rem', md: '0rem' },
           }}
         >
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Paper elevation={3} sx={{ padding: '1rem' }}>
+            <Paper
+              elevation={3}
+              sx={{
+                padding: { xs: '3rem', md: '1rem' },
+              }}
+            >
               <Grid container>
                 <Controller
                   name='fK_PersonID'
