@@ -1,9 +1,14 @@
 import { useContext } from 'react';
 import { AppContext } from '../../contexts/appContext';
-import { Box } from '@mui/material';
-import { useFetchUserById } from '../../staff/queries/useQueries/useFetchUserById';
+import { Box, Grid } from '@mui/material';
+import { LastPlayedPingPongGame } from '../components/lastPlayedPingPongGame';
 
 export const Home = () => {
-  // test first azure commit
-  return <Box>test</Box>;
+  return (
+    <Grid container>
+      <Grid item xs={12}>
+        <LastPlayedPingPongGame />
+      </Grid>
+    </Grid>
+  );
 };
