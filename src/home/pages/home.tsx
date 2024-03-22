@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AppContext } from '../../contexts/appContext';
-import { Box, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import { LastPlayedPingPongGame } from '../components/lastPlayedPingPongGame';
 
 export const Home = () => {

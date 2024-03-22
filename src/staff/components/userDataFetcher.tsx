@@ -8,10 +8,11 @@ import { Box } from '@mui/material';
 type UserDataFetcherProps = {
   user: EmployeeResponse;
   highScorePlace?: number;
+  maxWidht: number;
 };
 
 export const UserDataFetcher = (props: UserDataFetcherProps) => {
-  const { user, highScorePlace } = props;
+  const { user, highScorePlace, maxWidht } = props;
 
   const fetchEmpRank = useFetchEmpRankById(user.personID);
   const fetchQuizResult = useFetchQuizResultById(user.personID);
@@ -54,6 +55,7 @@ export const UserDataFetcher = (props: UserDataFetcherProps) => {
               padding: '4px',
               borderRadius: '4px',
               boxShadow: '0px 0px 15px 3px black',
+              maxWidth: maxWidht,
             }}
           >
             <ProfileCard

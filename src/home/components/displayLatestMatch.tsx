@@ -4,6 +4,8 @@ import {
   Grid,
   ListItem,
   Typography,
+  useMediaQuery,
+  useTheme,
 } from '@mui/material';
 import { ProfileCard } from '../../profile/components/profileCard';
 import { PlayerData } from './lastPlayedPingPongGame';
@@ -18,11 +20,11 @@ type DisplayLatestMatchProps = {
 export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
   const { matchDate, winner, defeated } = props;
 
+  const theme = useTheme();
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+
   const winnerRank = useFetchPongRankById(winner.personID);
   const defeatedRank = useFetchPongRankById(defeated.personID);
-
-  console.log('winner', winner);
-  console.log('defated', defeated);
 
   const setBorder = (victory: boolean) => {
     if (victory) {
@@ -36,19 +38,40 @@ export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
     <Grid container display={'flex'} justifyContent={'center'}>
       {winnerRank && winnerRank.data && defeatedRank && defeatedRank.data ? (
         <>
-          <Grid item xs={2}>
-            <Typography
-              sx={{ position: 'absolute', right: '', color: 'green' }}
-              variant='h4'
-            >
-              Winner!
-            </Typography>
+          <Grid
+            item
+            xs={6}
+            md={2}
+            sx={{
+              marginRight: isMdUp ? '30px' : '0px',
+            }}
+          >
+            <Grid item display={'flex'} justifyContent={'center'}>
+              <Typography
+                sx={{
+                  position: 'absolute',
+                  marginTop: '5px',
+                  marginLeft: !isMdUp ? '-20px' : '',
+                  marginRight: !isMdUp ? '20px' : '',
+                  color: '#00FF00',
+                  background: 'linear-gradient(45deg, #00000080, #00000040)',
+                  padding: '0px 15px',
+
+                  borderRadius: '4px',
+                }}
+                variant={isMdUp ? 'h4' : 'h5'}
+              >
+                Winner!
+              </Typography>
+            </Grid>
             <Box
               sx={{
                 backgroundImage: setBorder(true),
                 padding: '4px',
                 borderRadius: '4px',
                 boxShadow: '0px 0px 15px 3px black',
+                marginLeft: !isMdUp ? '-20px' : '',
+                marginRight: !isMdUp ? '+20px' : '',
               }}
             >
               <ProfileCard
@@ -56,44 +79,44 @@ export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
                 image={winner.imageUrl}
                 header='Rank'
                 rankTitle={winnerRank.data.rankTitle}
+                points={`Points ${winner.points}` || ''}
+                colorPoints='#00FF00'
               />
             </Box>
           </Grid>
 
           <Grid
-            item
-            xs={2}
-            display={'flex'}
-            justifyContent={'space-between'}
-            alignItems={'center'}
-            flexDirection={'row'}
-            ml={10}
-            mr={10}
+            xs={6}
+            md={2}
+            sx={{
+              marginLeft: isMdUp ? '30px' : '0px',
+            }}
           >
-            <Grid item>
-              <Typography variant='h1'>{winner.points}</Typography>
+            <Grid item display={'flex'} justifyContent={'center'}>
+              <Typography
+                sx={{
+                  position: 'absolute',
+                  marginTop: '5px',
+                  marginLeft: !isMdUp ? '20px' : '',
+                  marginRight: !isMdUp ? '-20px' : '',
+                  color: 'red',
+                  background: 'linear-gradient(45deg, #00000080, #00000040)',
+                  padding: '0px 9px',
+                  borderRadius: '4px',
+                }}
+                variant={isMdUp ? 'h4' : 'h5'}
+              >
+                Defeated!
+              </Typography>
             </Grid>
-            <Grid item>
-              <Typography variant='h1'>-</Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant='h1'>{defeated.points}</Typography>
-            </Grid>
-          </Grid>
-
-          <Grid item xs={2}>
-            <Typography
-              sx={{ position: 'absolute', right: '', color: 'red' }}
-              variant='h4'
-            >
-              Defetad!
-            </Typography>
             <Box
               sx={{
                 backgroundImage: setBorder(false),
                 padding: '4px',
                 borderRadius: '4px',
                 boxShadow: '0px 0px 15px 3px black',
+                marginLeft: !isMdUp ? '20px' : '',
+                marginRight: !isMdUp ? '-20px' : '',
               }}
             >
               <ProfileCard
@@ -101,6 +124,8 @@ export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
                 image={defeated.imageUrl}
                 header='Rank'
                 rankTitle={defeatedRank.data.rankTitle}
+                points={`Points ${defeated.points}` || ''}
+                colorPoints='red'
               />
             </Box>
           </Grid>

@@ -95,17 +95,26 @@ export const LastPlayedPingPongGame = () => {
             <Grid container>
               <Grid item xs={12}>
                 <Typography
-                  gutterBottom
                   variant='h4'
                   sx={{
                     display: 'flex',
                     justifyContent: 'center',
-                    paddingBottom: '10px',
                     color: 'grey',
                     fontWeight: 'bold',
                   }}
                 >
                   Last Played Game
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Typography
+                  gutterBottom
+                  mb={2}
+                  variant='caption'
+                  color='text.secondary'
+                  sx={{ justifyContent: 'center', display: 'flex' }}
+                >
+                  {dayjs(latestMatch.matchDate).format('dddd, MMMM DD, YYYY')}
                 </Typography>
               </Grid>
               <Grid item xs={12}>
