@@ -85,13 +85,7 @@ export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
             </Box>
           </Grid>
 
-          <Grid
-            xs={6}
-            md={2}
-            sx={{
-              marginLeft: isMdUp ? '30px' : '0px',
-            }}
-          >
+          <Grid item xs={6} md={2} sx={{ marginLeft: isMdUp ? '30px' : '0px' }}>
             <Grid item display={'flex'} justifyContent={'center'}>
               <Typography
                 sx={{
