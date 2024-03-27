@@ -34,26 +34,33 @@ export default function SignIn(props: SignInProps) {
 
   const onSubmit = (data: LoginRequest) => {
     setIsLoading(true);
-    setTimeout(() => {
-      userSignIn.mutate(data, {
-        onSuccess: (data) => {
-          toast.success('Welcome!');
-          setUser(data.result);
-          setSignInModalOpen(false);
-        },
-        onError: (error: any) => {
-          setErrorMessage(error.response.data);
-        },
-        onSettled: () => {
-          setIsLoading(false);
-        },
-      });
-    }, 1500);
+    userSignIn.mutate(data, {
+      onSuccess: (data) => {
+        toast.success('Welcome!');
+        setUser(data.result);
+        setSignInModalOpen(false);
+      },
+      onError: (error: any) => {
+        setErrorMessage(error.response.data);
+      },
+      onSettled: () => {
+        setIsLoading(false);
+      },
+    });
   };
 
   return (
     <>
-      <Box sx={{ marginTop: '6rem' }}>
+      <Box
+        sx={{
+          marginTop: '6rem',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 9999,
+        }}
+      >
         <section className='%-100 gradient-custom'>
           <div className='container py-1 h-100'>
             <div className='row d-flex justify-content-center align-items-center h-100'>

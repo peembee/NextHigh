@@ -5,7 +5,7 @@ import { CircularProgress, Grid, Typography } from '@mui/material';
 import { WorstQuizPlayer } from './worstQuizPlayer';
 
 export const DisplayWorstQuizPlayer = () => {
-  const [user, setUser] = useState<EmployeeResponse>();
+  const [user, setUser] = useState<EmployeeResponse[]>();
   const fetchUser = useFetchUser();
 
   useEffect(() => {
@@ -17,36 +17,59 @@ export const DisplayWorstQuizPlayer = () => {
     }
   }, [fetchUser.data]);
 
+  useEffect(() => {
+    if (fetchUser.data && fetchUser.data.length > 0) {
+      const sortedUsers = [...fetchUser.data].sort(
+        (a, b) => b.empPoints - a.empPoints
+      );
+      if (sortedUsers.length >= 3) {
+        const lastThreeUsers = sortedUsers.slice(-3);
+        setUser(lastThreeUsers);
+      } else {
+        setUser(sortedUsers);
+      }
+    }
+  }, [fetchUser.data]);
+
   return (
     <>
       {fetchUser.isLoading && <CircularProgress />}
-      {fetchUser.data && user ? (
-        <>
-          <Grid container pt={10}>
-            <Grid item xs={12}>
-              <Typography
-                variant='h5'
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  color: 'grey',
-                  fontWeight: 'bold',
-                }}
-              >
-                R U even an Employee?..
-              </Typography>
-              <Grid
-                item
-                xs={12}
-                display={'flex'}
-                justifyContent={'center'}
-                pt={3}
-              >
-                <WorstQuizPlayer user={user} />
-              </Grid>
+      {fetchUser.data && user && user.length > 0 ? (
+        <Grid container pt={5}>
+          <Grid item xs={10}>
+            <Typography
+              variant='h5'
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                color: 'grey',
+                fontWeight: 'bold',
+              }}
+            >
+              Step Up!
+            </Typography>
+            <Grid
+              container
+              spacing={3}
+              pt={3}
+              display={'flex'}
+              justifyContent={'center'}
+            >
+              {user.map((user, index) => (
+                <Grid
+                  key={index}
+                  item
+                  xs={12}
+                  md={4}
+                  display={'flex'}
+                  justifyContent={'right'}
+                >
+                  <WorstQuizPlayer user={user} />
+                </Grid>
+              ))}
             </Grid>
           </Grid>
-        </>
+        </Grid>
       ) : (
         <Typography
           variant='h5'

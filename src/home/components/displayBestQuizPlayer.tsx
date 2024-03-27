@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { EmployeeResponse } from '../../services/API/response/employeeResponse';
 import { useFetchUser } from '../../pingPong/queries/useQueries/useFetchUser';
 import { CircularProgress, Grid, Typography } from '@mui/material';
-import { WorstQuizPlayer } from './worstQuizPlayer';
 import { BestQuizPlayer } from './bestQuizPlayer';
 
 export const DisplayBestQuizPlayer = () => {
@@ -23,7 +22,7 @@ export const DisplayBestQuizPlayer = () => {
       {fetchUser.isLoading && <CircularProgress />}
       {fetchUser.data && user ? (
         <>
-          <Grid container pt={10}>
+          <Grid container pt={5}>
             <Grid item xs={12}>
               <Typography
                 variant='h5'

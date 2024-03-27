@@ -54,23 +54,22 @@ export const AddPingPongGame = () => {
 
   const onSubmit = (data: PongResultRequest) => {
     setLoading(true);
-    setTimeout(() => {
-      createResult.mutate(data, {
-        onSuccess: (data) => {
-          queryClient.invalidateQueries({ queryKey: PongRankKeys.all });
-          queryClient.invalidateQueries({ queryKey: PongResultKeys.all });
-          queryClient.invalidateQueries({ queryKey: EmployeeKeys.all });
-          toast.success('You have successfully registered the game!');
-          reset();
-        },
-        onError: (error) => {
-          toast.error('An error occurred. Please try again later.');
-        },
-        onSettled: () => {
-          setLoading(false);
-        },
-      });
-    }, 1500);
+
+    createResult.mutate(data, {
+      onSuccess: (data) => {
+        queryClient.invalidateQueries({ queryKey: PongRankKeys.all });
+        queryClient.invalidateQueries({ queryKey: PongResultKeys.all });
+        queryClient.invalidateQueries({ queryKey: EmployeeKeys.all });
+        toast.success('You have successfully registered the game!');
+        reset();
+      },
+      onError: (error) => {
+        toast.error('An error occurred. Please try again later.');
+      },
+      onSettled: () => {
+        setLoading(false);
+      },
+    });
   };
 
   return (

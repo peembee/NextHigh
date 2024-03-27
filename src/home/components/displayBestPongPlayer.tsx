@@ -22,7 +22,7 @@ export const DisplayBestPongPlayer = () => {
       {fetchUser.isLoading && <CircularProgress />}
       {fetchUser.data && user ? (
         <>
-          <Grid container pt={10}>
+          <Grid container pt={5}>
             <Grid item xs={12}>
               <Typography
                 variant='h5'
@@ -33,7 +33,7 @@ export const DisplayBestPongPlayer = () => {
                   fontWeight: 'bold',
                 }}
               >
-                Top PingPong Player
+                Top Dog Player
               </Typography>
               <Grid
                 item

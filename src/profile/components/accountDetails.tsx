@@ -54,23 +54,22 @@ export const AccountDetails = (props: AccountDetailsProps) => {
 
   const onSubmit = (data: EmployeeRequest) => {
     setIsLoading(true);
-    setTimeout(() => {
-      updateUser.mutate(data, {
-        onSuccess: () => {
-          // When update is successful, fetch updated user data
-          if (data.personID) {
-            fetchUpdatedUser(data.personID);
-          }
-          toast.success('Account updated');
-        },
-        onError: (error) => {
-          toast.error('An error occurred. Please try again later.');
-        },
-        onSettled: () => {
-          setIsLoading(false);
-        },
-      });
-    }, 1500);
+
+    updateUser.mutate(data, {
+      onSuccess: () => {
+        // When update is successful, fetch updated user data
+        if (data.personID) {
+          fetchUpdatedUser(data.personID);
+        }
+        toast.success('Account updated');
+      },
+      onError: (error) => {
+        toast.error('An error occurred. Please try again later.');
+      },
+      onSettled: () => {
+        setIsLoading(false);
+      },
+    });
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className='background'>
