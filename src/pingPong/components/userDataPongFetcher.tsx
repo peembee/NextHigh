@@ -7,10 +7,11 @@ import { Box, CircularProgress } from '@mui/material';
 type UserDataPongFetcher = {
   user: EmployeeResponse;
   highScorePlace?: number;
+  maxWidht: number;
 };
 
 export const UserDataPongFetcher = (props: UserDataPongFetcher) => {
-  const { user, highScorePlace } = props;
+  const { user, highScorePlace, maxWidht } = props;
 
   const pongRank = useFetchPongRankById(user.personID);
   const pongResults = useFetchPongResultById(user.personID);
@@ -47,6 +48,7 @@ export const UserDataPongFetcher = (props: UserDataPongFetcher) => {
               padding: '4px',
               borderRadius: '4px',
               boxShadow: '0px 0px 15px 3px black',
+              maxWidth: maxWidht,
             }}
           >
             <ProfileCard

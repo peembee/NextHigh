@@ -30,27 +30,35 @@ export function SignUp(props: SignUpProps) {
 
   const onSubmit = (data: EmployeeRequest) => {
     setIsLoading(true);
-    setTimeout(() => {
-      createNewUser.mutate(data, {
-        onSuccess: (data) => {
-          toast.success('You are successfully registered!');
-          reset();
-          setSignUpModalOpen(false);
-          setSignInModalOpen(true);
-        },
-        onError: (error) => {
-          toast.error('An error occurred. Please try again later.');
-        },
-        onSettled: () => {
-          setIsLoading(false);
-        },
-      });
-    }, 2000);
+
+    createNewUser.mutate(data, {
+      onSuccess: (data) => {
+        toast.success('You are successfully registered!');
+        reset();
+        setSignUpModalOpen(false);
+        setSignInModalOpen(true);
+      },
+      onError: (error) => {
+        toast.error('An error occurred. Please try again later.');
+      },
+      onSettled: () => {
+        setIsLoading(false);
+      },
+    });
   };
 
   return (
     <>
-      <Box sx={{ marginTop: '6rem' }}>
+      <Box
+        sx={{
+          marginTop: '6rem',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          zIndex: 9999,
+        }}
+      >
         <div>
           <section className='%-100 gradient-custom'>
             <div className='container py-1 h-100'>

@@ -88,21 +88,20 @@ export const AddQuiz = (props: AddQuizProps) => {
 
   const onSubmit = (data: QuizRequest) => {
     setIsLoading(true);
-    setTimeout(() => {
-      createQuiz.mutate(data, {
-        onSuccess: () => {
-          toast.success('Quiz Added');
-          reset();
-          setModalOpen(false);
-        },
-        onError: (error) => {
-          toast.error('An error occurred. Please try again later.');
-        },
-        onSettled: () => {
-          setIsLoading(false);
-        },
-      });
-    }, 1500);
+
+    createQuiz.mutate(data, {
+      onSuccess: () => {
+        toast.success('Quiz Added');
+        reset();
+        setModalOpen(false);
+      },
+      onError: (error) => {
+        toast.error('An error occurred. Please try again later.');
+      },
+      onSettled: () => {
+        setIsLoading(false);
+      },
+    });
   };
 
   return (

@@ -173,6 +173,7 @@ export const ProfilePaper = (props: ProfileCardProps) => {
                         padding: '4px',
                         borderRadius: '4px',
                         boxShadow: '0px 0px 15px 3px black',
+                        maxWidth: 300,
                       }}
                     >
                       <ProfileCard
@@ -194,6 +195,7 @@ export const ProfilePaper = (props: ProfileCardProps) => {
                         padding: '4px',
                         borderRadius: '4px',
                         boxShadow: '0px 0px 15px 3px black',
+                        maxWidth: 300,
                       }}
                     >
                       <ProfileCard
