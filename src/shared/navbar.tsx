@@ -70,12 +70,14 @@ export function Navbar(props: NavbarProps) {
     setAnchorElUser(null);
   };
   // Page-actions
-  const goToPage = (page: string) => {
+  const goToPage = (page: string, pageName?: string) => {
     if (!user && (page === '/pingpong' || page === '/staff')) {
       setSignInModalOpen(true);
     } else {
       setActivePage(page);
       navigate(page);
+
+      pageName ? (document.title = `NextHigh - ${pageName}`) : `NextHigh`;
     }
   };
 
@@ -171,7 +173,9 @@ export function Navbar(props: NavbarProps) {
                     <Tooltip title={page.toolTip} placement='right'>
                       <Typography
                         onClick={() =>
-                          activePage === page.url ? null : goToPage(page.url)
+                          activePage === page.url
+                            ? null
+                            : goToPage(page.url, page.pageName)
                         }
                         variant='body2'
                         sx={{
@@ -223,7 +227,7 @@ export function Navbar(props: NavbarProps) {
               {pages.map((page) => (
                 <Button
                   key={page.id}
-                  onClick={() => goToPage(page.url)}
+                  onClick={() => goToPage(page.url, page.pageName)}
                   disabled={activePage === page.url}
                   sx={{
                     ml: 7,

@@ -10,6 +10,7 @@ import { useFetchEmpRankById } from '../queries/useQueries/useFetchEmpRankById';
 import { useFetchPongRankById } from '../queries/useQueries/useFetchPongRankById';
 import { useFetchPongResultById } from '../queries/useQueries/useFetchPongResultById';
 import { useFetchQuizResultById } from '../queries/useQueries/useFetchQuizResultById';
+import { Typography } from '@mui/material';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -20,7 +21,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
   '& .MuiPaper-root': {
     maxWidth: '100%',
-    maxHeight: '90%', // Justera dialogens maximala bredd här
+    maxHeight: '90%',
   },
 }));
 
@@ -56,17 +57,35 @@ export const Profile = (props: ProfileProps) => {
               pr: 2,
               display: 'flex',
               justifyContent: 'center',
+              background: 'linear-gradient(45deg, #ff00ff, #00ffff)',
+              boxShadow: '0px 10px 40px 10px rgba(0, 0, 0, 0.2)',
             }}
             id='customized-dialog-title'
           >
-            Profile
+            <Typography
+              variant='h5'
+              sx={{
+                color: '#fff',
+                textAlign: 'center',
+                borderRadius: '25px',
+                textTransform: 'uppercase',
+                fontFamily: 'Arial, sans-serif',
+                fontWeight: 'bold',
+                letterSpacing: '6px',
+                minWidth: '300px',
+                maxWidth: `auto`,
+              }}
+            >
+              {user.username}
+            </Typography>
           </DialogTitle>
           <IconButton
             aria-label='close'
             onClick={() => setModalOpen(false)}
             sx={{
               position: 'absolute',
-              right: 8,
+              scale: '1.3',
+              right: 20,
               top: 8,
               color: (theme) => theme.palette.grey[500],
             }}
