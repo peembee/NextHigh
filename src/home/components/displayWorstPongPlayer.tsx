@@ -39,7 +39,13 @@ export const DisplayWorstPongPlayer = () => {
             >
               The Underdogs
             </Typography>
-            <Grid container spacing={3} pt={3}>
+            <Grid
+              container
+              spacing={3}
+              pt={3}
+              display={'flex'}
+              justifyContent={'center'}
+            >
               {user.map((user, index) => (
                 <Grid
                   key={index}

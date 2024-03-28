@@ -19,7 +19,7 @@ export const BestQuizPlayer = (props: BestQuizPlayerProps) => {
     if (!EmpResults.data || EmpResults.data.length === 0) {
       return 0;
     }
-    const totalQuizzes = fetchAllQuizzes.data.length;
+    const totalQuizzes = fetchAllQuizzes.data ? fetchAllQuizzes.data.length : 0;
     const correctAnswers = EmpResults.data.filter(
       (myQuiz) => myQuiz.isCorrect === 'Correct answer'
     );
