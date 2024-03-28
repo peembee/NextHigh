@@ -16,7 +16,11 @@ export const WorstQuizPlayer = (props: WorstQuizPlayerProps) => {
   const fetchAllQuizzes = useFetchQuiz();
 
   const marginQuiz = () => {
-    if (!EmpResults.data || EmpResults.data.length === 0) {
+    if (
+      !EmpResults.data ||
+      EmpResults.data.length === 0 ||
+      !fetchAllQuizzes.data
+    ) {
       return 0;
     }
     const totalQuizzes = fetchAllQuizzes.data.length;
