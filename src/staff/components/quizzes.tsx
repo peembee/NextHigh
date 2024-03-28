@@ -367,6 +367,18 @@ export const Quizzes = (props: QuizzesProps) => {
                         )}
                       />
                     </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      display={'flex'}
+                      justifyContent={'center'}
+                      pt={3}
+                      mb={4}
+                    >
+                      <Button onClick={() => fetchNewQuiz()}>
+                        Save For Later
+                      </Button>
+                    </Grid>
                   </Grid>
                 </>
               </Grid>

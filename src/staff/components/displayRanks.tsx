@@ -46,7 +46,7 @@ export const DisplayRanks = () => {
 
   return (
     <>
-      <Box sx={{ overflowX: 'auto' }}>
+      <Box sx={{ overflowX: 'auto', marginTop: { xs: '10rem', md: '0rem' } }}>
         <Typography
           gutterBottom
           variant='h4'
