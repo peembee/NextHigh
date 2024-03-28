@@ -349,7 +349,7 @@ export const AddQuiz = (props: AddQuizProps) => {
               autoFocus
               sx={{ width: '30%' }}
             >
-              {isLoading ? <CircularProgress size={24} /> : 'Save Details'}
+              {isLoading ? <CircularProgress size={24} /> : 'Create Quiz'}
             </Button>
           </DialogActions>
         </form>
