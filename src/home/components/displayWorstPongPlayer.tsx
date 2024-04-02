@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { EmployeeResponse } from '../../services/API/response/employeeResponse';
 import { useFetchUser } from '../../pingPong/queries/useQueries/useFetchUser';
-import { CircularProgress, Grid, Typography } from '@mui/material';
+import { CircularProgress, Divider, Grid, Typography } from '@mui/material';
 import { WorstPongPlayer } from './worstPongPlayer';
 
 export const DisplayWorstPongPlayer = () => {
@@ -27,6 +27,12 @@ export const DisplayWorstPongPlayer = () => {
       {fetchUser.isLoading && <CircularProgress />}
       {fetchUser.data && user && user.length > 0 ? (
         <Grid container pt={5}>
+          <Divider
+            orientation='vertical'
+            sx={{
+              borderWidth: '1px', // Här anger du önskad tjocklek, till exempel 2px
+            }}
+          />
           <Grid item xs={10}>
             <Typography
               variant='h5'
@@ -41,14 +47,16 @@ export const DisplayWorstPongPlayer = () => {
             </Typography>
             <Grid
               container
-              spacing={3}
               pt={3}
+              pr={5}
+              pl={5}
               display={'flex'}
               justifyContent={'center'}
             >
-              {user.map((user, index) => (
+              {user.map((user) => (
                 <Grid
-                  key={index}
+                  key={user.personID}
+                  sx={{ paddingBottom: { xs: '20px', md: '0px' } }}
                   item
                   xs={12}
                   md={4}

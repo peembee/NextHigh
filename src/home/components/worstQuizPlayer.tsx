@@ -38,6 +38,7 @@ export const WorstQuizPlayer = (props: WorstQuizPlayerProps) => {
     <>
       {EmpResults.data && fetchRank.data ? (
         <Box
+          ml={3}
           sx={{
             backgroundImage: 'linear-gradient(45deg, #FF0000, #000000)',
             padding: '4px',

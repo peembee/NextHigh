@@ -29,10 +29,10 @@ export const Home = () => {
       </Grid>
 
       <Grid container>
-        <Grid item xs={12} md={6} display={'flex'} justifyContent={'center'}>
+        <Grid item xs={12} md={4} display={'flex'} justifyContent={'center'}>
           <DisplayBestPongPlayer />
         </Grid>
-        <Grid item xs={12} md={6} display={'flex'} justifyContent={'center'}>
+        <Grid item xs={12} md={8} display={'flex'} justifyContent={'center'}>
           <DisplayWorstPongPlayer />
         </Grid>
       </Grid>
@@ -54,10 +54,10 @@ export const Home = () => {
         <Divider />
       </Grid>
       <Grid container>
-        <Grid item xs={12} md={6} display={'flex'} justifyContent={'center'}>
+        <Grid item xs={12} md={4} display={'flex'} justifyContent={'center'}>
           <DisplayBestQuizPlayer />
         </Grid>
-        <Grid item xs={12} md={6} display={'flex'} justifyContent={'center'}>
+        <Grid item xs={12} md={8} display={'flex'} justifyContent={'center'}>
           <DisplayWorstQuizPlayer />
         </Grid>
       </Grid>
