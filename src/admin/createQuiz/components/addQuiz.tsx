@@ -116,7 +116,7 @@ export const AddQuiz = (props: AddQuizProps) => {
             sx={{ m: 0, p: 2, display: 'flex', justifyContent: 'center' }}
             id='customized-dialog-title'
           >
-            <Typography>Account Details</Typography>
+            <Typography>Create Quiz</Typography>
           </DialogTitle>
           <IconButton
             aria-label='close'
