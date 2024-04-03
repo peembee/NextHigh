@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useQuery } from '@tanstack/react-query';
 import { QuizKeys } from '../../../profile/queries/quizKeys';
 
-const getUserApi = 'https://localhost:7062/api/UnAsweredQuizzes';
+const getUserApi = `${import.meta.env.VITE_APP_API_URL}/UnAsweredQuizzes`;
 
 const FetchUnAnsweredQuizzes = async (userID: number) => {
   const res = await axios.get(`${getUserApi}/${userID}`);

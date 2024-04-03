@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { EmployeeKeys } from '../employeeKeys';
 import { EmployeeRequest } from '../../../services/API/request/employeeRequest';
 
-const updateUserApi = 'https://localhost:7062/api/person';
+const updateUserApi = `${import.meta.env.VITE_APP_API_URL}/person`;
 
 const updateUser = async (user: EmployeeRequest) => {
   const res = await axios.put(`${updateUserApi}/${user.personID}`, user);

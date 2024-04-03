@@ -114,7 +114,7 @@ export const Quizzes = (props: QuizzesProps) => {
         }
         setTimeoutId(newTimeoutId);
       },
-      onError: (error) => {
+      onError: () => {
         toast.error('An error occurred. Please try again later.');
         setLoading(false);
       },
@@ -190,7 +190,7 @@ export const Quizzes = (props: QuizzesProps) => {
                           name='fK_QuizID'
                           control={control}
                           defaultValue={quiz.quizID}
-                          render={({ field }) => (
+                          render={() => (
                             <>
                               <Typography variant='h5'>
                                 {quiz.quizHeading}

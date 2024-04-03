@@ -32,13 +32,13 @@ export function SignUp(props: SignUpProps) {
     setIsLoading(true);
 
     createNewUser.mutate(data, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         toast.success('You are successfully registered!');
         reset();
         setSignUpModalOpen(false);
         setSignInModalOpen(true);
       },
-      onError: (error) => {
+      onError: () => {
         toast.error('An error occurred. Please try again later.');
       },
       onSettled: () => {

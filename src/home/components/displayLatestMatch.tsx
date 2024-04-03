@@ -2,7 +2,6 @@ import {
   Box,
   CircularProgress,
   Grid,
-  ListItem,
   Typography,
   useMediaQuery,
   useTheme,
@@ -18,7 +17,7 @@ type DisplayLatestMatchProps = {
 };
 
 export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
-  const { matchDate, winner, defeated } = props;
+  const { winner, defeated } = props;
 
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));

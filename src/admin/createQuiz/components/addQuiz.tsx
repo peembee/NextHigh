@@ -95,7 +95,7 @@ export const AddQuiz = (props: AddQuizProps) => {
         reset();
         setModalOpen(false);
       },
-      onError: (error) => {
+      onError: () => {
         toast.error('An error occurred. Please try again later.');
       },
       onSettled: () => {

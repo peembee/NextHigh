@@ -3,7 +3,7 @@ import { QuizKeys } from '../../../../../profile/queries/quizKeys';
 import axios from 'axios';
 import { QuizRequest } from '../../../../../services/API/request/quizRequest';
 
-const createQuizApi = 'https://localhost:7062/api/Quizzes';
+const createQuizApi = `${import.meta.env.VITE_APP_API_URL}/Quizzes`;
 
 const createQuiz = async (newQuiz: QuizRequest) => {
   const res = await axios.post(createQuizApi, newQuiz);

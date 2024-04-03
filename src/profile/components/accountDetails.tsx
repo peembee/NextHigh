@@ -63,7 +63,7 @@ export const AccountDetails = (props: AccountDetailsProps) => {
         }
         toast.success('Account updated');
       },
-      onError: (error) => {
+      onError: () => {
         toast.error('An error occurred. Please try again later.');
       },
       onSettled: () => {

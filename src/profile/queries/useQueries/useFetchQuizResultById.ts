@@ -2,7 +2,7 @@ import axios from 'axios';
 import { QuizResultKeys } from '../quizResultKeys';
 import { useQuery } from '@tanstack/react-query';
 
-const getQuizResultApi = 'https://localhost:7062/api/QuizResult';
+const getQuizResultApi = `${import.meta.env.VITE_APP_API_URL}/QuizResult`;
 
 const getQuizResultById = async (userID: number) => {
   const res = await axios.get(`${getQuizResultApi}/${userID}`);

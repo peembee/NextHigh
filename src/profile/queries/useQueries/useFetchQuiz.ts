@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { QuizKeys } from '../quizKeys';
 
-const fetchQuizApi = 'https://localhost:7062/api/Quizzes';
+const fetchQuizApi = `${import.meta.env.VITE_APP_API_URL}/Quizzes`;
 
 const getAllQuiz = async () => {
   const res = await axios.get(fetchQuizApi);

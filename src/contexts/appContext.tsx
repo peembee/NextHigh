@@ -35,7 +35,7 @@ export const Userprovider = ({ children }: { children: ReactNode }) => {
   };
 
   const fetchUpdatedUser = async (userId: number) => {
-    const getUserApi = 'https://localhost:7062/api/person';
+    const getUserApi = `${import.meta.env.VITE_APP_API_URL}/person`;
     try {
       const res = await axios.get(`${getUserApi}/${userId}`);
       setUser(res.data);

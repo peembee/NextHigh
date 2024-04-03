@@ -55,7 +55,7 @@ export const ProfilePicDisplayer = (props: ProfilePicDisplayerProps) => {
         setUpdatedPicture(true);
         setUpdatedPictureMessage('Updated');
       },
-      onError: (error) => {
+      onError: () => {
         setUpdatedPicture(true);
         setUpdatedPictureMessage('An error occurred. Please try again later.');
       },

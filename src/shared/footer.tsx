@@ -1,5 +1,3 @@
-import { Box } from '@mui/material';
-
 export function Footer() {
   return (
     <footer className='bg-body-tertiary text-center text-lg-start'>

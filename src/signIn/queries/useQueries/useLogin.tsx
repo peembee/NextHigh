@@ -1,8 +1,8 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
 import { LoginRequest } from '../../../services/API/request/loginRequest';
 
-const getUserApi = 'https://localhost:7062/api/Login';
+const getUserApi = `${import.meta.env.VITE_APP_API_URL}/Login`;
 
 const getUser = async (user: LoginRequest) => {
   const res = await axios.post(getUserApi, {

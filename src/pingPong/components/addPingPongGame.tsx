@@ -56,14 +56,14 @@ export const AddPingPongGame = () => {
     setLoading(true);
 
     createResult.mutate(data, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         queryClient.invalidateQueries({ queryKey: PongRankKeys.all });
         queryClient.invalidateQueries({ queryKey: PongResultKeys.all });
         queryClient.invalidateQueries({ queryKey: EmployeeKeys.all });
         toast.success('You have successfully registered the game!');
         reset();
       },
-      onError: (error) => {
+      onError: () => {
         toast.error('An error occurred. Please try again later.');
       },
       onSettled: () => {
@@ -175,7 +175,7 @@ export const AddPingPongGame = () => {
                                         }
                                       />
                                     )}
-                                    onChange={(event, value) =>
+                                    onChange={(_event, value) =>
                                       field.onChange(value)
                                     }
                                   />

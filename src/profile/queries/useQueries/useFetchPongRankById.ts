@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { PongRankKeys } from '../pongRankKeys';
 
-const getUserApi = 'https://localhost:7062/api/PongRanks';
+const getUserApi = `${import.meta.env.VITE_APP_API_URL}/PongRanks`;
 
 const getPongRankById = async (userID: number) => {
   const res = await axios.get(`${getUserApi}/${userID}`);

@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { ProfileKeys } from '../profileKeys';
 
-const getUserApi = 'https://localhost:7062/api/EmployeeRanks';
+const getUserApi = `${import.meta.env.VITE_APP_API_URL}/EmployeeRanks`;
 
 const getEmpRankById = async (userID: number) => {
   const res = await axios.get(`${getUserApi}/${userID}`);
