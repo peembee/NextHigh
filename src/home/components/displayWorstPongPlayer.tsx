@@ -59,9 +59,9 @@ export const DisplayWorstPongPlayer = () => {
                   sx={{ paddingBottom: { xs: '20px', md: '0px' } }}
                   item
                   xs={12}
-                  md={4}
+                  md={3}
                   display={'flex'}
-                  justifyContent={'right'}
+                  justifyContent={'center'}
                 >
                   <WorstPongPlayer user={user} />
                 </Grid>

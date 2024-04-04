@@ -45,7 +45,7 @@ export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
               marginRight: isMdUp ? '30px' : '0px',
             }}
           >
-            <Grid item display={'flex'} justifyContent={'center'}>
+            <Grid item display={'flex'} justifyContent={'left'}>
               <Typography
                 sx={{
                   position: 'absolute',
@@ -71,6 +71,7 @@ export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
                 boxShadow: '0px 0px 15px 3px black',
                 marginLeft: !isMdUp ? '-20px' : '',
                 marginRight: !isMdUp ? '+20px' : '',
+                maxWidth: '330px',
               }}
             >
               <ProfileCard
@@ -85,7 +86,7 @@ export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
           </Grid>
 
           <Grid item xs={6} md={2} sx={{ marginLeft: isMdUp ? '30px' : '0px' }}>
-            <Grid item display={'flex'} justifyContent={'center'}>
+            <Grid item display={'flex'} justifyContent={'left'}>
               <Typography
                 sx={{
                   position: 'absolute',
@@ -110,6 +111,7 @@ export const DisplayLatestMatch = (props: DisplayLatestMatchProps) => {
                 boxShadow: '0px 0px 15px 3px black',
                 marginLeft: !isMdUp ? '20px' : '',
                 marginRight: !isMdUp ? '-20px' : '',
+                maxWidth: '330px',
               }}
             >
               <ProfileCard
