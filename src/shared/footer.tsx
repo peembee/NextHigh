@@ -12,7 +12,7 @@ export function Footer() {
           alignItems: 'center',
         }}
       >
-        © 2020 Copyright:
+        © 2024 Copyright Peembee:
       </div>
     </footer>
   );
